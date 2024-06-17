@@ -20,7 +20,7 @@ const ejs = require('ejs');
 
 const model = require('./Server/Model/model');
 
-// const connectDB=require("./Server/Database/connection");
+const connectDB=require("./Server/Database/connection");
 
 dotenv.config({path : 'config.env'});
 const app=express();
@@ -31,7 +31,7 @@ const PORT = 8000;
 app.use(morgan('tiny'));
 
 //mongoDB connection
-// connectDB();
+connectDB();
 
 //parser request to body-parsar
 app.use(bodyparser.urlencoded({extended : true}))
@@ -39,18 +39,7 @@ app.use(bodyparser.urlencoded({extended : true}))
 //set view engine
 app.set("view engine", "ejs")
 
-// app.use(session({
-//   secret: 'your-secret-key', // Change this to a secure random key
-//   resave: false,
-//   saveUninitialized: true
-// }));
 
-// app.use(methodOverride("_method"));
-
-//load assets
-// app.use('/css',express.static(path.resolve(__dirname,"Assets/css")))
-// app.use('/img',express.static(path.resolve(__dirname,"Assets/img")))
-// app.use('/js',express.static(path.resolve(__dirname,"Assets/js")))
 
 //load router
 app.use('/', require('./Server/Routes/router')); 
@@ -63,59 +52,12 @@ app.use(express.static(__dirname + '/Assets'));
 
 
 
-// Admin.plugin(passportLocalMongoose);
-// const User = mongoose.model("Admin", Admin);
-
-// // Set up Passport configuration
-// passport.use(new LocalStrategy(User.authenticate()));
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
-
-// // creating session
-
-// app.use(
-// 	session({
-// 	  name: "user-session", // Set a unique name for sessions
-// 	  secret: "your-secret-key",
-// 	  resave: false,
-// 	  saveUninitialized: false,
-// 	  // You can also specify additional session options here
-// 	})
-//   );
-
-// app.use(session({
-//     secret: 'your-secret-key',
-//     resave: false,
-//     saveUninitialized: true
-// }));
-
-// app.use(require("connect-flash")());
-
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 
-// app.use(passport.initialize());
-// app.use(passport.session());
 
-// passport.serializeUser((user, done) => {
-//     done(null, user.id);
-//   });
-  
-//   passport.deserializeUser((id, done) => {
-//     User.findById(id, (err, user) => {
-//       done(err, user);
-//     });
-//   });
-
-//   // Ensure that this middleware runs before the route where you access req.user._id
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 
 const saltRounds = 10;
 
-// app.get('/', (req, res)=>{
-//     res.send("Hello word");
-// })
+
 app.listen(PORT, ()=> {console.log(`Server is running on http://localhost:${PORT}`)});

@@ -25,14 +25,14 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
-    default: 'user',
+    // default: 'user',
     // enum: ['user', 'admin']
   },
-  contactNumber: {
-    type: String,
-    required: true,
-    trim: true
-  },
+//   contactNumber: {
+//     type: String,
+//     required: true,
+//     trim: true
+//   },
   gender: {
     type: String,
     required: true,
@@ -42,13 +42,24 @@ const userSchema = new mongoose.Schema({
     type: String,
     required : true
   },
+  country: {
+    type: String,
+    required : true
+  },
+  city: {
+    type: String,
+    required : true
+  },
+  isAdmin: {
+    type: Boolean,
+    required : true
+  },
+
   Profile_image: Buffer,
   dateOfBirth: {
     type: Date
   },
-  department: {
-    type: String
-  },
+  
   
  
 }, {
@@ -56,15 +67,15 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hash password before saving
-userSchema.pre('save', async function (next) {
-  const user = this;
+// userSchema.pre('save', async function (next) {
+//   const user = this;
 
-  if (user.isModified('password')) {
-    user.password = await bcrypt.hash(user.password, 8);
-  }
+//   if (user.isModified('password')) {
+//     user.password = await bcrypt.hash(user.password, 8);
+//   }
 
-  next();
-});
+//   next();
+// });
 
 // Generate auth token
 // userSchema.methods.generateAuthToken = async function () {

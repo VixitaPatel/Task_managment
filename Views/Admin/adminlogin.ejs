@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Task-Management Website</title>
     <!---Custom CSS File--->
-    <link rel="stylesheet" href="/assets/css/signin.css" />
+    <link rel="stylesheet" href="css/signin.css" />
   </head>
   <body>
     <section class="container">
       <header>Sign In</header>
-      <form action="#" class="form">
+      <form action="/admin-login" class="form" method="post" >
         <div class="input-box">
           <label>Email Address</label>
           <input type="text" placeholder="Enter email address" required />
@@ -29,7 +29,7 @@
         <button>Submit</button>
         <div class="all">
             <h3 class="sign">Not a member ? </h3>
-                <a href="signup.html" class="ndbutton">Sign Up</a>
+                <a href="/admin-registration" class="ndbutton">Sign Up</a>
         </div>
       </form>
     </section>
