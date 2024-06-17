@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task-Management System</title>
+	<link rel="stylesheet" href="../../Assets/css/adminnav.css">
+	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<div class="wrapper">
+		<div class="wrapper_inner">
+			<div class="vertical_wrap">
+			<div class="backdrop"></div>
+			<div class="vertical_bar">
+				<div class="profile_info">
+					<div class="img_holder">
+						<img src="https://static.thenounproject.com/png/2303078-200.png" alt="profile_pic">
+					</div>
+					<p class="title">Vinit Mehta</p>
+					<p class="sub_title">vinitmehta383@gmail.com</p>
+				</div>
+				<ul class="menu">
+					<li><a href="dashboard.html">
+						<span class="icon"><i class="fas fa-home"></i></span>
+						<span class="text">Your Profile</span>
+					</a></li>
+					<li><a href="#">
+						<span class="icon"><i class="fas fa-file-alt"></i></span>
+						<span class="text">Assign tasks</span>
+					</a></li>
+					<li><a href="#">
+						<span class="icon"><i class="fas fa-chart-pie"></i></span>
+						<span class="text">Verify tasks</span>
+					</a></li>
+					<li><a href="#">
+						<span class="icon"><i class="fas fa-user"></i></span>
+						<span class="text">Pending tasks</span>
+					</a></li>
+					<li><a href="#">
+						<span class="icon"><i class="fas fa-cog"></i></span>
+						<span class="text">Completed tasks</span>
+					</a></li>
+                    <li><a href="#">
+						<span class="icon"><i class="fas fa-cog"></i></span>
+						<span class="text">Update Profile</span>
+					</a></li>
+                    <li><a href="#">
+						<span class="icon"><i class="fas fa-cog"></i></span>
+						<span class="text">Change Password</span>
+					</a></li>
+                    <li><a href="#">
+						<span class="icon"><i class="fas fa-cog"></i></span>
+						<span class="text">Logout</span>
+					</a></li>
+				</ul>
+
+				
+			</div>
+		</div>
+		<div class="main_container">
+			<div class="top_bar">
+				<div class="hamburger">
+					<i class="fas fa-bars"></i>
+				</div>
+				<div class="logo">
+					Task <span>Management System</span>
+				</div>
+			</div>
+
+			<div class="container">
+				<!-- <div class="content">
+					<div class="item">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi illum ipsum inventore, ratione, repudiandae iste. At rerum dolorum quidem, modi fugiat numquam assumenda fugit recusandae perferendis ullam dolorem pariatur consectetur ex suscipit nulla officiis totam laboriosam vel exercitationem ad. Dolore assumenda vitae repudiandae possimus. Sint expedita, error molestiae perspiciatis magni.</div>
+					<div class="item">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi illum ipsum inventore, ratione, repudiandae iste. At rerum dolorum quidem, modi fugiat numquam assumenda fugit recusandae perferendis ullam dolorem pariatur consectetur ex suscipit nulla officiis totam laboriosam vel exercitationem ad. Dolore assumenda vitae repudiandae possimus. Sint expedita, error molestiae perspiciatis magni.</div>
+					<div class="item">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi illum ipsum inventore, ratione, repudiandae iste. At rerum dolorum quidem, modi fugiat numquam assumenda fugit recusandae perferendis ullam dolorem pariatur consectetur ex suscipit nulla officiis totam laboriosam vel exercitationem ad. Dolore assumenda vitae repudiandae possimus. Sint expedita, error molestiae perspiciatis magni.</div>
+					<div class="item">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi illum ipsum inventore, ratione, repudiandae iste. At rerum dolorum quidem, modi fugiat numquam assumenda fugit recusandae perferendis ullam dolorem pariatur consectetur ex suscipit nulla officiis totam laboriosam vel exercitationem ad. Dolore assumenda vitae repudiandae possimus. Sint expedita, error molestiae perspiciatis magni.</div>
+				</div> -->
+			</div>
+		</div>
+		</div>
+	</div>
+
+<script>
+	var hamburger = document.querySelector(".hamburger");
+	var wrapper  = document.querySelector(".wrapper");
+	var backdrop = document.querySelector(".backdrop");
+
+	hamburger.addEventListener("click", function(){
+		wrapper.classList.add("active");
+	})
+
+	backdrop.addEventListener("click", function(){
+		wrapper.classList.remove("active");
+	})
+</script>
+</body>
+</html>
