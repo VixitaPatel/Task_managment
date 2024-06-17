@@ -114,7 +114,7 @@ const taskSchema = new mongoose.Schema({
 });
 
 
-const assignmentSchema = new Schema({
+const assignmentSchema = new mongoose.Schema({
     task: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Task',
@@ -139,5 +139,5 @@ const assignmentSchema = new Schema({
   const Task = mongoose.model('Task', taskSchema);
   const Assignment = mongoose.model('Assignment', assignmentSchema);
 
-  module.exports = {User,Task, Assignemt};
+  module.exports = {User,Task, Assignment};
   
