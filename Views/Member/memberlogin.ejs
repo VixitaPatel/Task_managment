@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!---Coding By CodingLab | www.codinglabweb.com--->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>TasksSimplify</title>
+    <link
+      rel="icon"
+      href="https://img.icons8.com/?size=100&id=xF9ZbyGPFTC2&format=png&color=000000"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="css/signin.css" />
+  </head>
+  <body>
+    <section class="container">
+      <header>Sign In</header>
+      <form action="#" class="form" onsubmit="validateForm()">
+        <div class="input-box">
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="Enter email address" />
+        </div>
+        <div class="column">
+          <div class="input-box">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter Password" />
+          </div>
+        </div>
+        <div class="forgot-pass">
+          <a href="forgotpass.html">Forgot Password?</a>
+        </div>
+        <button type="submit">Submit</button>
+        <div class="all">
+          <h3 class="sign">Not a member ? </h3>
+          <a href="/member-registration" class="ndbutton">Sign Up</a>
+        </div>
+      </form>
+    </section>
+
+    <script>
+      function validateForm() {
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+        if (email == "" || password == "") {
+          alert("Please enter both email address and password.");
+          return false;
+        }
+        return true;
+      }
+    </script>
+  </body>
+</html>

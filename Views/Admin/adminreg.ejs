@@ -12,12 +12,12 @@
 "https://img.icons8.com/?size=100&id=xF9ZbyGPFTC2&format=png&color=000000"
             type="image/x-icon"
         />
-    <link rel="stylesheet" href="../../Assets/css/signup.css" />
+    <link rel="stylesheet" href="css/signup.css" />
   </head>
   <body>
     <section class="container">
       <header>Sign Up</header>
-      <form action="/member-registration" class="form" method="post">
+      <form action="/admin-registration" class="form" method="post">
         <div class="input-box">
           <label>Full Name</label>
           <input type="text" name="name" placeholder="Enter full name" required />
@@ -46,15 +46,15 @@
           <h3>Gender</h3>
           <div class="gender-option">
             <div class="gender">
-              <input type="radio" id="check-male" name="gender" checked />
+              <input type="radio" id="check-male" name="gender"  value="male" checked />
               <label for="check-male">male</label>
             </div>
             <div class="gender">
-              <input type="radio" id="check-female" name="gender" />
+              <input type="radio" id="check-female" name="gender" value="female" />
               <label for="check-female">Female</label>
             </div>
             <div class="gender">
-              <input type="radio" id="check-other" name="gender" />
+              <input type="radio" id="check-other" name="gender"  value="prefer not to say"/>
               <label for="check-other">prefer not to say</label>
             </div>
           </div>
@@ -68,7 +68,7 @@
                 <option hidden>Country</option>
                 <option>America</option>
                 <option>Japan</option>
-                <option>India</option>
+                <option selected>India</option>
                 <option>Nepal</option>
               </select>
             </div>
