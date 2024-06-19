@@ -9,7 +9,7 @@
 "https://img.icons8.com/?size=100&id=xF9ZbyGPFTC2&format=png&color=000000"
             type="image/x-icon"
         />
-	<link rel="stylesheet" href="../../Assets/css/membernav.css">
+	<link rel="stylesheet" href="../../Assets/css/UpdateProfile.css">
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -21,7 +21,7 @@
 			<div class="vertical_bar">
 				<div class="profile_info">
 					<div class="img_holder">
-						<img src="../../Assets/img/member.png" alt="profile_pic">
+						<img src="https://static.thenounproject.com/png/2303078-200.png" alt="profile_pic">
 					</div>
 					<p class="title">Vinit Mehta</p>
 					<p class="sub_title">vinitmehta383@gmail.com</p>
@@ -43,9 +43,9 @@
 						<span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
 						<span class="text">Completed tasks</span>
 					</a></li>
-                    <li><a href="#">
+                    <li><a href="#"  id="profile-link">
 						<span class="icon"><i class="fa fa-user" aria-hidden="true"></i></span>
-						<span class="text">Update Profile</span>
+						<span class="text" id="plink">Update Profile</span>
 					</a></li>
                     <li><a href="#">
 						<span class="icon"><i class="fa fa-lock"></i></span>
@@ -70,7 +70,30 @@
 				</div>
 			</div>
 
-			
+			<div class="container">
+                <img src="https://static.thenounproject.com/png/2303078-200.png" alt="profile_pic" class="profilepic">
+                <hr>
+                <div class="details">
+                    <div class="column">
+						<form class="editform">
+							<div><span class="label">Name:</span><input type="text" value="Vinit Bhavin Mehta" class="inputtext"></div>
+							<hr>
+							<div><span class="label">Email:</span><input type="text" value="vinitmehta383@gmail.com" class="inputtext"></div>
+							<hr>
+                        	<div><span class="label">Role:</span> <input type="text" value="Software Engineer" class="inputtext"></div>
+							<hr>
+                        	<div><span class="label">Address:</span><input type="text" value="606-Vandan Appts., Near-Palace Jain Derasar, Park Colony, Jamnagar-361008." class="inputtext"></div>
+							<hr>
+                        	<div><span class="label">Country:</span><input type="text" value="India" class="inputtext"></div>
+							<hr>
+                        	<div><span class="label">City:</span><input type="text" value="Jamnagar" class="inputtext"></div>
+							<hr>
+						</form>
+                    </div>
+                </div>
+				<button type="submit">Save All Changes</button>
+            </div>
+            
 		</div>
 		</div>
 	</div>
@@ -87,6 +110,9 @@
 	backdrop.addEventListener("click", function(){
 		wrapper.classList.remove("active");
 	})
+
+    document.getElementById("profile-link").style.backgroundColor = "white";
+    document.getElementById("plink").style.color = "#425c5a";
 </script>
 </body>
 </html>
