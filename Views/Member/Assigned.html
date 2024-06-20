@@ -9,7 +9,7 @@
 "https://img.icons8.com/?size=100&id=xF9ZbyGPFTC2&format=png&color=000000"
             type="image/x-icon"
         />
-	<link rel="stylesheet" href="../../Assets/css/profile.css">
+	<link rel="stylesheet" href="../../../Assets/css/assignedmem.css">
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -21,15 +21,15 @@
 			<div class="vertical_bar">
 				<div class="profile_info">
 					<div class="img_holder">
-						<img src="https://static.thenounproject.com/png/2303078-200.png" alt="profile_pic">
+						<img src="../../Assets/img/member.png" alt="profile_pic">
 					</div>
 					<p class="title">Vinit Mehta</p>
 					<p class="sub_title">vinitmehta383@gmail.com</p>
 				</div>
 				<ul class="menu">
-					<li><a href="#" id="profile-link">
+					<li><a href="dashboard.html">
 						<span class="icon"><i class="fas fa-home"></i></span>
-						<span class="text" id="plink">Your Profile</span>
+						<span class="text">Your Profile</span>
 					</a></li>
 					<li><a href="#">
 						<span class="icon"><i class="fas fa-file-alt"></i></span>
@@ -51,9 +51,9 @@
 						<span class="icon"><i class="fa fa-user" aria-hidden="true"></i></span>
 						<span class="text">Update Profile</span>
 					</a></li>
-                    <li><a href="#">
+                    <li><a href="#" id="profile-link">
 						<span class="icon"><i class="fa fa-lock"></i></span>
-						<span class="text">Change Password</span>
+						<span class="text" id="plink">Change Password</span>
 					</a></li>
                     <li><a href="#">
 						<span class="icon"><i class="fa fa-power-off" aria-hidden="true"></i></span>
@@ -74,29 +74,9 @@
 				</div>
 			</div>
 
-			<div class="container">
-                <img src="https://static.thenounproject.com/png/2303078-200.png" alt="profile_pic" class="profilepic">
-                <hr>
-                <div class="details">
-                    <div class="column">
-                        <div><span class="label">Name:</span> Vinit Bhavin Mehta</div>
-                        <hr>
-                        <div><span class="label">Email:</span> vinitmehta383@gmail.com</div>
-                        <hr>
-                        <div><span class="label">Role:</span> Software Engineer</div>
-                        <hr>
-                        <div><span class="label">Gender:</span> Male</div>
-                        <hr>
-                        <div><span class="label">Address:</span> 606-Vandan Appts., Near-Palace Jain Derasar, Park Colony, Jamnagar-361008.</div>
-                        <hr>
-                        <div><span class="label">Country:</span> India</div>
-                        <hr>
-                        <div><span class="label">City:</span> Jamnagar</div>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-            
+			<div class="container" id="card-container">
+				
+			</div>
 		</div>
 		</div>
 	</div>
@@ -105,7 +85,7 @@
 	var hamburger = document.querySelector(".hamburger");
 	var wrapper  = document.querySelector(".wrapper");
 	var backdrop = document.querySelector(".backdrop");
-
+    
 	hamburger.addEventListener("click", function(){
 		wrapper.classList.add("active");
 	})
@@ -113,9 +93,50 @@
 	backdrop.addEventListener("click", function(){
 		wrapper.classList.remove("active");
 	})
+    document.getElementById('profile-link').style.backgroundColor = "white";
+    document.getElementById('plink').style.color = "#425c5a";
+    const container = document.getElementById('card-container');
+    const names = [
+            'John Doe', 'Jane Smith', 'Alice Johnson', 'Bob Brown', 'Charlie Davis',
+            'Diana Evans', 'Ethan Harris', 'Fiona Green', 'George White', 'Helen Black'
+        ];
+        const descriptions = [
+            'Lorem ipsum dolor sit amet, consectetur ',
+            'Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.',
+            'In condimentum facilisis porta.',
+            'Sed nec diam eu diam mattis viverra.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam, ut.',
+            'Nulla fringilla, orci ac euismod semper.',
+            'Aenean ultricies mi vitae est.',
+            'Mauris placerat eleifend leo.',
+            'Quisque sit amet est et sapien ullamcorper pharetra.',
+            'Vestibulum erat wisi, condimentum sed, commodo vitae.',
+            'Mauris fermentum dictum magna.'
+        ];
 
-    document.getElementById("profile-link").style.backgroundColor = "white";
-    document.getElementById("plink").style.color = "#425c5a";
+        for (let i = 0; i <4; i++) 
+        { 
+            const card = document.createElement('div');
+            card.className = 'cardtemplate';
+            
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'name';
+            nameDiv.textContent = names[i];
+
+            const descriptionDiv = document.createElement('div');
+            descriptionDiv.className = 'description';
+            descriptionDiv.textContent = descriptions[i];
+
+            const buttonDiv = document.createElement('a');
+            buttonDiv.className = 'button';
+            buttonDiv.textContent = 'Learn More';
+            buttonDiv.href = '#'; 
+
+            card.appendChild(nameDiv);
+            card.appendChild(descriptionDiv);
+            card.appendChild(buttonDiv);
+            container.appendChild(card);
+        }
+</script>
 </script>
 </body>
 </html>
