@@ -27,21 +27,17 @@
 					<p class="sub_title">vinitmehta383@gmail.com</p>
 				</div>
 				<ul class="menu">
-					<li><a href="dashboard.html">
+					<li><a href="#">
 						<span class="icon"><i class="fas fa-home"></i></span>
 						<span class="text">Your Profile</span>
 					</a></li>
-					<li><a href="#">
+					<li><a href="#" id="profile-link">
 						<span class="icon"><i class="fas fa-file-alt"></i></span>
-						<span class="text">Assign tasks</span>
-					</a></li>
-					<li><a href="#">
-						<span class="icon"><i class="fa fa-tasks" aria-hidden="true"></i></span>
-						<span class="text">Verify tasks</span>
+						<span class="text" id="plink">Assigned tasks</span>
 					</a></li>
 					<li><a href="#">
 						<span class="icon"><i class="fas fa-chart-pie"></i></span>
-						<span class="text">Pending tasks</span>
+						<span class="text">Pending Tasks</span>
 					</a></li>
 					<li><a href="#">
 						<span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
@@ -51,9 +47,9 @@
 						<span class="icon"><i class="fa fa-user" aria-hidden="true"></i></span>
 						<span class="text">Update Profile</span>
 					</a></li>
-                    <li><a href="#" id="profile-link">
+                    <li><a href="#">
 						<span class="icon"><i class="fa fa-lock"></i></span>
-						<span class="text" id="plink">Change Password</span>
+						<span class="text">Change Password</span>
 					</a></li>
                     <li><a href="#">
 						<span class="icon"><i class="fa fa-power-off" aria-hidden="true"></i></span>
@@ -103,7 +99,7 @@
         const descriptions = [
             'Lorem ipsum dolor sit amet, consectetur ',
             'Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.',
-            'In condimentum facilisis porta.',
+            'In condimentum facilisis porta.Sed nec diam eu diam mattis viverra.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam, ut.',
             'Sed nec diam eu diam mattis viverra.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam, ut.',
             'Nulla fringilla, orci ac euismod semper.',
             'Aenean ultricies mi vitae est.',
@@ -113,7 +109,7 @@
             'Mauris fermentum dictum magna.'
         ];
 
-        for (let i = 0; i <4; i++) 
+        for (let i = 0; i < 3; i++) 
         { 
             const card = document.createElement('div');
             card.className = 'cardtemplate';
@@ -128,7 +124,8 @@
 
             const buttonDiv = document.createElement('a');
             buttonDiv.className = 'button';
-            buttonDiv.textContent = 'Learn More';
+            buttonDiv.textContent = 'Mark as Completed';
+			buttonDiv.backgroundColor = '#425c5a';
             buttonDiv.href = '#'; 
 
             card.appendChild(nameDiv);

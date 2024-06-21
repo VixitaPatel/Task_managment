@@ -245,7 +245,7 @@ body{
 .button {
     margin-top: auto; /* Push button to the bottom */
     padding: 8px 16px;
-    background-color: #007BFF;
+    background-color: #425c5a;
     color: #fff;
     text-align: center;
     text-decoration: none;
@@ -253,7 +253,7 @@ body{
     cursor: pointer;
 }
 .button:hover {
-    background-color: #0056b3; /* Darken the button on hover */
+    background-color: #364d4b; /* Darken the button on hover */
 }
 .name
 {
