@@ -25,6 +25,7 @@ route.get('/member-registration',controller.g_member_registration);
 route.post('/admin-registration',controller.p_admin_registration);
 route.post('/member-registration',controller.p_member_registration);
 
-route.get('/mem-profile', controller.g_mem_profile);
+route.get('/admin-profile', controller.g_admin_profile);
+// route.get('/mem-profile', controller.g_mem_profile);
 
 module.exports = route

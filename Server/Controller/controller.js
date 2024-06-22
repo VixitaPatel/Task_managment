@@ -121,7 +121,8 @@ exports.p_admin_login = async (req, res) => {
                 // console.log("KK");
                 // const verify_one = jwt.verify(token, secret);
                 // console.log(verify_one);
-                res.render("Admin/admin_sidenav");
+                console.log(user);
+                res.render("Admin/admin_sidenav",{user});
             } else {
                 console.log("not match");
                 // const title = "ERROR";
@@ -194,26 +195,52 @@ exports.p_member_login = async (req, res) => {
     }
 }
 
-exports.g_mem_profile = async (req, res) => {
-    try {
+// exports.g_mem_profile = async (req, res) => {
+//     try {
 
-        const userId = req.query.userId;
-        console.log(userId);
+//         const userId = req.query.userId;
+//         console.log(userId);
+//         // const userId = req.session.userId;
+
+//         // Fetch user information from the database
+//         const user = await User.findById(userId);
+//         // const ID = req.body.stud_id;     //Student as a schema name?.populate('ProgramRegistered')
+//         // const student = await Student.findOne(_id = req.user);
+//         // const Student_token = req.cookies.jwtokenstudent;
+//         // const verified_student = jwt.verify(Student_token, "sagar1");
+//         // const email = verified_student.email_id;
+//         // const student = await Student.find({ Email_id: email });
+//         // const program = await Program.findById(student[0].ProgramRegistered).populate('DegreeOffered BranchOffered CourseOffered');
+
+//         // const program = await Program.findById(student.ProgramRegistered).populate('DegreeOffered BranchOffered CourseOffered');
+//          console.log(user);
+//         res.render("Member/mem_profile.ejs", { user });
+
+        
+       
+
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).send('Internal Server Error');
+//     }
+// }
+exports.g_admin_profile = async (req, res) => {
+    try {
+       const ad= await User.findOne({ _id: req.user });
+       console.log(ad.name);
+       
+        //  const ID = req.user;
+        // const userId = req.query.userId;
+        // const user = await User.findById(userId);
+        //         console.log(userId);
+        // const user = await user.findOne(_id = req.user);
         // const userId = req.session.userId;
 
         // Fetch user information from the database
-        const user = await User.findById(userId);
-        // const ID = req.body.stud_id;     //Student as a schema name?.populate('ProgramRegistered')
-        // const student = await Student.findOne(_id = req.user);
-        // const Student_token = req.cookies.jwtokenstudent;
-        // const verified_student = jwt.verify(Student_token, "sagar1");
-        // const email = verified_student.email_id;
-        // const student = await Student.find({ Email_id: email });
-        // const program = await Program.findById(student[0].ProgramRegistered).populate('DegreeOffered BranchOffered CourseOffered');
-
-        // const program = await Program.findById(student.ProgramRegistered).populate('DegreeOffered BranchOffered CourseOffered');
-         console.log(user);
-        res.render("Member/mem_profile.ejs", { user });
+        // const user = await User.findById(userId);
+        // console.log(ad);
+        //  console.log(userId);
+        res.render("Admin/admin_profile.ejs", { ad });
 
         
        
