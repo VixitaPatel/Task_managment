@@ -6,12 +6,12 @@ const path=require("path");
 // const bcrypt=require("bcryptjs");
 // const validatePhoneNumber = require('validate-phone-number-node-js');
 // const validator = require("email-validator");
-// const passport = require("passport");
+const passport = require("passport");
 // const multer = require("multer");
 // const XLXS = require("xlsx");
 // const Excel = require("exceljs");
 const ejs = require('ejs');
-// const session = require('express-session');
+const session = require('express-session');
 // const mongoose = require('mongoose');
 // const nodemailer = require("nodemailer");
 
@@ -26,6 +26,11 @@ dotenv.config({path : 'config.env'});
 const app=express();
 
 const PORT = 8000;
+app.use(session({
+    secret: 'your-secret-key', // Change this to a secure random key
+    resave: false,
+    saveUninitialized: true
+  }));
 
 //log request
 app.use(morgan('tiny'));
@@ -53,7 +58,19 @@ app.use(express.static(__dirname + '/Assets'));
 
 
 
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+  
+  passport.deserializeUser((id, done) => {
+    User.findById(id, (err, user) => {
+      done(err, user);
+    });
+  });
 
+  // Ensure that this middleware runs before the route where you access req.user._id
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 
