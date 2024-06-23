@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
-
+const session = require("express-session");
 
 const bcrypt = require('bcryptjs');
 // const jwt = require('jsonwebtoken');
@@ -151,5 +151,34 @@ const assignmentSchema = new mongoose.Schema({
   const Task = mongoose.model('Task', taskSchema);
   const Assignment = mongoose.model('Assignment', assignmentSchema);
 
+  
+// Set up Passport configuration
+// passport.use(new LocalStrategy(Student.authenticate()));
+// passport.serializeUser(Student.serializeUser());
+// passport.deserializeUser(Student.deserializeUser());
+
+// passport.use(new LocalStrategy(Admin.authenticate()));
+// passport.serializeUser(Admin.serializeUser());
+// passport.deserializeUser(Admin.deserializeUser());
+
+// passport.use(new LocalStrategy(Faculty.authenticate()));
+// passport.serializeUser(Faculty.serializeUser());
+// passport.deserializeUser(Faculty.deserializeUser());
+
+app.use(
+	session({
+	  name: "user-session", // Set a unique name for sessions
+	  secret: "your-secret-key",
+	  resave: false,
+	  saveUninitialized: false,
+	  // You can also specify additional session options here
+	})
+  );
+
+
+  // app.use(require("connect-flash")());
+
+// app.use(passport.initialize());
+// app.use(passport.session());
   module.exports = {User,Task, Assignment};
   

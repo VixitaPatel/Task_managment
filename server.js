@@ -16,7 +16,9 @@ const session = require('express-session');
 // const nodemailer = require("nodemailer");
 
 // mongoose.connect("mongodb+srv://admin:sis_it304@cluster0.7fcnw1p.mongodb.net/?retryWrites=true&w=majority")
-
+const jwt = require("jsonwebtoken");
+var cookieParser = require('cookie-parser');
+// app.use(cookieParser());
 
 const model = require('./Server/Model/model');
 
@@ -58,19 +60,19 @@ app.use(express.static(__dirname + '/Assets'));
 
 
 
-passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
+// passport.serializeUser((user, done) => {
+//     done(null, user.id);
+//   });
   
-  passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-      done(err, user);
-    });
-  });
+//   passport.deserializeUser((id, done) => {
+//     User.findById(id, (err, user) => {
+//       done(err, user);
+//     });
+//   });
 
-  // Ensure that this middleware runs before the route where you access req.user._id
-app.use(passport.initialize());
-app.use(passport.session());
+//   // Ensure that this middleware runs before the route where you access req.user._id
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 

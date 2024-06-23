@@ -93,50 +93,74 @@ exports.p_member_registration = async (req, res) => {
 
 }
 
+// exports.p_admin_login = async (req, res) => {
+//     try {
+//         // check if the user exists
+//         const user = await User.findOne({ email: req.body.email });
+//         if (user) {
+//             //check if password matches
+//             const result = await bcrypt.compare(req.body.password, user.password);
+//             // const result = await req.body.f_password === user.Password;
+
+//             if (result) {
+//                 const secret = "ad123";
+//                 const token = await jwt.sign({ "name": user.name, "email": user.email }, secret);
+//                 console.log(token);
+//                 res.cookie("jwtoken", token, {
+//                     expires: new Date(Date.now() + 25892000000),
+//                     httpOnly: true
+//                 });
+//                 // const stored_token = req.cookies.jwtoken;
+
+//                 // console.log(stored_token);
+
+//             //    console.log(a_jwtoken);
+//                 console.log(user);
+//                 res.render("Admin/admin_sidenav",{user});
+//             } else {
+//                 console.log("not match");
+//                 // const title = "ERROR";
+//                 // const message = "Password does not match!";
+//                 // const icon = "error";
+//                 // const href = "/facultylogin";
+//                 res.redirect("/admin-login");
+//             }
+//         } else {
+//             console.log("not exist");
+//             // const title = "ERROR";
+//             // const message = "Password does not match!";
+//             // const icon = "error";
+//             // const href = "/facultylogin";
+//             res.redirect("/admin-login");
+//         }
+//     } catch (err) {
+//         res.status(400).json({ err });
+//     }
+// }
 exports.p_admin_login = async (req, res) => {
     try {
-        // check if the user exists
         const user = await User.findOne({ email: req.body.email });
         if (user) {
-            //check if password matches
             const result = await bcrypt.compare(req.body.password, user.password);
-            // const result = await req.body.f_password === user.Password;
 
             if (result) {
-                // const secret = "sagar";
-                // const token = await jwt.sign({ "name": user.name, "email_id": user.Email_id }, secret);
-                // console.log("YYY");
-                // console.log(token);
-                // console.log("TTT");
-                // res.cookie("f_jwtoken", token, {
-                //     expires: new Date(Date.now() + 25892000000),
-                //     httpOnly: true
-                // });
+                const secret = "ad123";
+                const token = jwt.sign({ name: user.name, email: user.email }, secret);
+                console.log(token);
 
-                // console.log("HHH");
+                res.cookie("jwtoken", token, {
+                    expires: new Date(Date.now() + 25892000000),
+                    httpOnly: true
+                });
 
-                // const stored_token = req.cookies.f_jwtoken;
-
-                // console.log(stored_token);
-                // console.log("KK");
-                // const verify_one = jwt.verify(token, secret);
-                // console.log(verify_one);
                 console.log(user);
-                res.render("Admin/admin_sidenav",{user});
+                res.render("Admin/admin_sidenav", { user });
             } else {
                 console.log("not match");
-                // const title = "ERROR";
-                // const message = "Password does not match!";
-                // const icon = "error";
-                // const href = "/facultylogin";
                 res.redirect("/admin-login");
             }
         } else {
             console.log("not exist");
-            // const title = "ERROR";
-            // const message = "Password does not match!";
-            // const icon = "error";
-            // const href = "/facultylogin";
             res.redirect("/admin-login");
         }
     } catch (err) {
@@ -154,15 +178,15 @@ exports.p_member_login = async (req, res) => {
             // const result = await req.body.f_password === user.Password;
 
             if (result) {
-                // const secret = "sagar";
-                // const token = await jwt.sign({ "name": user.name, "email_id": user.Email_id }, secret);
-                // console.log("YYY");
+                const secret = "mem123";
+                const token = await jwt.sign({ "name": user.name, "email": user.email }, secret);
+                console.log(token);
                 // console.log(token);
                 // console.log("TTT");
-                // res.cookie("f_jwtoken", token, {
-                //     expires: new Date(Date.now() + 25892000000),
-                //     httpOnly: true
-                // });
+                res.cookie("jwtoken", token, {
+                    expires: new Date(Date.now() + 25892000000),
+                    httpOnly: true
+                });
 
                 // console.log("HHH");
 
@@ -172,8 +196,8 @@ exports.p_member_login = async (req, res) => {
                 // console.log("KK");
                 // const verify_one = jwt.verify(token, secret);
                 // console.log(verify_one);
-                // console.log(user);
-                res.render("Member/member_sidenav");
+                console.log(user);
+                res.render("Member/member_sidenav",{user});
             } else {
                 console.log("not match");
                 // const title = "ERROR";
@@ -226,21 +250,23 @@ exports.p_member_login = async (req, res) => {
 // }
 exports.g_admin_profile = async (req, res) => {
     try {
-       const ad= await User.findOne({ _id: req.user });
-       console.log(ad.name);
-       
-        //  const ID = req.user;
-        // const userId = req.query.userId;
-        // const user = await User.findById(userId);
-        //         console.log(userId);
-        // const user = await user.findOne(_id = req.user);
-        // const userId = req.session.userId;
+        console.log(req.cookies.jwtoken);
+        if(!req.cookies.jwtoken)
+            {
+                console.log("not found token");
+            }
+        const admin_token = req.cookies.jwtoken;
+        const verified_admin = jwt.verify(admin_token, "ad123");
+        const email = verified_admin.email;
+        const user = await User.find({ email: email });
+        // const program = await Program.findById(student[0].ProgramRegistered).populate('DegreeOffered BranchOffered CourseOffered');
 
-        // Fetch user information from the database
-        // const user = await User.findById(userId);
-        // console.log(ad);
-        //  console.log(userId);
-        res.render("Admin/admin_profile.ejs", { ad });
+        // const program = await Program.findById(student.ProgramRegistered).populate('DegreeOffered BranchOffered CourseOffered');
+        // console.log("ssssss");
+        // console.log(program);
+        // console.log("eeeee");
+        console.log(user);
+        res.render("Admin/admin_profile.ejs", { user });
 
         
        

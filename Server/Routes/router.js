@@ -4,6 +4,9 @@ const app = express();
 const controller = require('../Controller/controller');
 
 const route = express.Router()
+const jwt = require("jsonwebtoken");
+// var cookieParser = require('cookie-parser');
+// app.use(cookieParser());
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
