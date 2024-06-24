@@ -3,11 +3,14 @@ var { User, Task, Assignemt } = require('../Model/model');
 
 const path = require("path");
 const bcrypt = require("bcryptjs");
+const bodyParser = require('body-parser');
 
 const express = require("express");
 const app = express();
 const jwt = require("jsonwebtoken");
 var cookieParser = require('cookie-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 const saltRounds = 10;
 
@@ -49,10 +52,7 @@ exports.p_admin_registration = async (req, res) => {
             city: req.body.city,
             isAdmin: true
         })
-        console.log("trueeee0");
-        console.log(newuser);
         await newuser.save();
-        console.log("sucess");
         res.redirect("/admin-login");
 
     } catch (err) {
@@ -139,27 +139,29 @@ exports.p_member_registration = async (req, res) => {
 // }
 exports.p_admin_login = async (req, res) => {
     try {
+        console.log("why");
         const user = await User.findOne({ email: req.body.email });
+        console.log("did you ?");
         if (user) {
             const result = await bcrypt.compare(req.body.password, user.password);
 
             if (result) {
                 const secret = "ad123";
                 const token = jwt.sign({ name: user.name, email: user.email }, secret);
-                console.log(token);
 
                 res.cookie("jwtoken", token, {
                     expires: new Date(Date.now() + 25892000000),
                     httpOnly: true
                 });
-
-                console.log(user);
+                console.log("vinit");
                 res.render("Admin/admin_sidenav", { user });
             } else {
+                console.log("helli");
                 console.log("not match");
                 res.redirect("/admin-login");
             }
         } else {
+            console.log("mehta");
             console.log("not exist");
             res.redirect("/admin-login");
         }
@@ -250,7 +252,8 @@ exports.p_member_login = async (req, res) => {
 // }
 exports.g_admin_profile = async (req, res) => {
     try {
-        console.log(req.cookies.jwtoken);
+        console.log("Cookies: ", req.cookies);
+        console.log("hii");
         if(!req.cookies.jwtoken)
             {
                 console.log("not found token");
@@ -265,15 +268,10 @@ exports.g_admin_profile = async (req, res) => {
         // console.log("ssssss");
         // console.log(program);
         // console.log("eeeee");
-        console.log(user);
         res.render("Admin/admin_profile.ejs", { user });
-
-        
-       
 
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
     }
 }
-
