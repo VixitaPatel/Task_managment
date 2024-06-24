@@ -31,17 +31,17 @@
 						<span class="icon"><i class="fas fa-home"></i></span>
 						<span class="text">Your Profile</span>
 					</a></li>
-					<li><a href="#" id="profile-link">
+					<li><a href="#">
 						<span class="icon"><i class="fas fa-file-alt"></i></span>
-						<span class="text" id="plink">Assigned tasks</span>
+						<span class="text">Assigned tasks</span>
 					</a></li>
 					<li><a href="#">
 						<span class="icon"><i class="fas fa-chart-pie"></i></span>
 						<span class="text">Pending tasks</span>
 					</a></li>
-					<li><a href="#">
+					<li><a href="#" id="profile-link">
 						<span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
-						<span class="text">Completed tasks</span>
+						<span class="text" id="plink">Completed tasks</span>
 					</a></li>
                     <li><a href="#">
 						<span class="icon"><i class="fa fa-user" aria-hidden="true"></i></span>
@@ -120,15 +120,9 @@
             const descriptionDiv = document.createElement('div');
             descriptionDiv.className = 'description';
             descriptionDiv.textContent = descriptions[i];
-
-            const buttonDiv = document.createElement('a');
-            buttonDiv.className = 'button';
-            buttonDiv.textContent = 'Mark as Completed';
-            buttonDiv.href = '#'; 
-
+            
             card.appendChild(nameDiv);
             card.appendChild(descriptionDiv);
-            card.appendChild(buttonDiv);
             container.appendChild(card);
         }
 		document.getElementById("profile-link").style.backgroundColor = "white";

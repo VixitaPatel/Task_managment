@@ -206,6 +206,9 @@ body{
     width: 80%;
     margin: auto;
 }
+.button:hover {
+    background-color: #364d4b; /* Darken the button on hover */
+}
 
 .profilepic {
     width: 220px; 
@@ -317,5 +320,8 @@ button {
     width: 50%; /* Adjust width as needed */
 }
 
+button:hover {
+    background-color: #364d4b; /* Darken the button on hover */
+}
 
 
