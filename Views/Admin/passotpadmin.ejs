@@ -16,15 +16,15 @@
   <body>
     <section class="container">
       <header>Forgot Password</header>
-      <form action="/member-login" method="post" class="form" onsubmit="validateForm()">
+      <form action="/varifyotpadmin" method="post" class="form" onsubmit="validateForm()">
         <div class="input-box">
             <div class="text">
-                <label>Enter the new password</label>
+                <label>Enter the OTP sent to your registered Email to proceed further</label>
             </div>
-            <input type="password" id="otp" name="otp" placeholder="Enter new password" class="in" required/>
+            <input type="number" id="otp" name="otp" placeholder="Enter OTP" class="in" required/>
         </div>
         
-        <button type="submit">Change Password</button>
+        <button type="submit">Verify OTP</button>
       </form>
     </section>
   </body>

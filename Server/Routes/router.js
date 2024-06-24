@@ -5,6 +5,7 @@ const controller = require('../Controller/controller');
 
 const route = express.Router()
 const jwt = require("jsonwebtoken");
+const session = require('express-session');
 // var cookieParser = require('cookie-parser');
 // app.use(cookieParser());
 const cookieParser = require("cookie-parser");
@@ -29,6 +30,16 @@ route.post('/admin-registration',controller.p_admin_registration);
 route.post('/member-registration',controller.p_member_registration);
 
 route.get('/admin-profile', controller.g_admin_profile);
-// route.get('/mem-profile', controller.g_mem_profile);
+route.get('/mem-profile', controller.g_mem_profile);
+
+route.get('/changepwdadmin', controller.g_changepwdadmin);
+route.post('/changepwdadmin', controller.p_changepwdadmin);
+
+route.get('/changepwdmem', controller.g_changepwdmem);
+route.post('/changepwdmem', controller.p_changepwdmem);
+
+route.get('/forgetpwdadmin', controller.g_forgetpwdadmin);
+route.post('/varifyotpadmin', controller.p_varifyotpadmin);
+route.post('/newpassadmin', controller.p_newpassadmin);
 
 module.exports = route
