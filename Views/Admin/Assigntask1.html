@@ -9,7 +9,7 @@
 "https://img.icons8.com/?size=100&id=xF9ZbyGPFTC2&format=png&color=000000"
             type="image/x-icon"
         />
-	<link rel="stylesheet" href="../../Assets/css/assignedmem.css">
+	<link rel="stylesheet" href="../../Assets/css/assigntask1.css">
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -31,11 +31,11 @@
 						<span class="icon"><i class="fas fa-home"></i></span>
 						<span class="text">Your Profile</span>
 					</a></li>
-					<li><a href="#">
+					<li><a href="#" id="profile-link">
 						<span class="icon"><i class="fas fa-file-alt"></i></span>
-						<span class="text">Assign tasks</span>
+						<span class="text" id="plink">Assign tasks</span>
 					</a></li>
-                    <li><a href="#">
+					<li><a href="#">
 						<span class="icon"><i class="fa fa-tasks" aria-hidden="true"></i></span>
 						<span class="text">Verify tasks</span>
 					</a></li>
@@ -43,17 +43,17 @@
 						<span class="icon"><i class="fas fa-chart-pie"></i></span>
 						<span class="text">Pending tasks</span>
 					</a></li>
-					<li><a href="#" id="profile-link">
+					<li><a href="#">
 						<span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
-						<span class="text" id="plink">Completed tasks</span>
+						<span class="text">Completed tasks</span>
 					</a></li>
                     <li><a href="#">
 						<span class="icon"><i class="fa fa-user" aria-hidden="true"></i></span>
 						<span class="text">Update Profile</span>
 					</a></li>
-                    <li><a href="#" id="profile-link">
+                    <li><a href="#">
 						<span class="icon"><i class="fa fa-lock"></i></span>
-						<span class="text" id="plink">Change Password</span>
+						<span class="text">Change Password</span>
 					</a></li>
                     <li><a href="#">
 						<span class="icon"><i class="fa fa-power-off" aria-hidden="true"></i></span>
@@ -74,8 +74,39 @@
 				</div>
 			</div>
 
-			<div class="container" id="card-container">
-				
+			<div class="container">
+				<img src="https://static.thenounproject.com/png/2303078-200.png" alt="profile_pic" class="profilepic">
+                <hr>
+				<div class="details">
+                    <div class="column">
+                        <form class="editform" id="myForm">
+							<div class="form-group">
+								<div class="label-container">
+									<span class="label">Enter Username of Employee:</span>
+								</div>
+								<input type="text" class="inputtext" placeholder="Username of Employee" required>
+							</div>
+							<hr>
+							<div class="form-group">
+								<div class="label-container">
+									<span class="label">Enter Email-Address of Employee:</span>
+								</div>
+								<input type="email" class="inputtext" placeholder="Email of Employee" required>
+							</div>
+                            <hr>
+                            <div class="form-group">
+								<div class="label-container">
+									<span class="label">Enter the description of task:</span>
+								</div>
+								<textarea id="form_message" name="message" class="inputtext" placeholder="Description of the task" rows="4" required="required" data-error="Please, leave us a message."></textarea
+                                    >
+							</div>
+							<hr>
+							<button type="submit">Assign the Work</button>
+						</form>
+						
+                    </div>
+                </div>
 			</div>
 		</div>
 		</div>
@@ -85,7 +116,7 @@
 	var hamburger = document.querySelector(".hamburger");
 	var wrapper  = document.querySelector(".wrapper");
 	var backdrop = document.querySelector(".backdrop");
-    
+
 	hamburger.addEventListener("click", function(){
 		wrapper.classList.add("active");
 	})
@@ -95,42 +126,6 @@
 	})
     document.getElementById('profile-link').style.backgroundColor = "white";
     document.getElementById('plink').style.color = "#425c5a";
-    const container = document.getElementById('card-container');
-    const names = [
-            'John Doe', 'Jane Smith', 'Alice Johnson', 'Bob Brown', 'Charlie Davis',
-            'Diana Evans', 'Ethan Harris', 'Fiona Green', 'George White', 'Helen Black'
-        ];
-        const descriptions = [
-            'Lorem ipsum dolor sit amet, consectetur ',
-            'Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.',
-            'In condimentum facilisis porta.',
-            'Sed nec diam eu diam mattis viverra.Lorem, ipsum dolor situisquam, ut.',
-            'Nulla fringilla, orci ac euismod semper.',
-            'Aenean ultricies mi vitae est.Lorem ipsum dolor sit amet consectetur ommodi facilis beatae eos dolorem consectetur blanditiis, porro earum vitae reiciendis aliquam recusandae qui alias ab minima. Nostrum, molestiae.',
-            'Mauris placerat eleifend leo.',
-            'Quisque sit amet est et sapien ullamcorper pharetra.',
-            'Vestibulum erat wisi, condimentum sed, commodo vitae.',
-            'Mauris fermentum dictum magna.'
-        ];
-
-        for (let i = 0; i < 10; i++) 
-        { 
-            const card = document.createElement('div');
-            card.className = 'cardtemplate';
-            const nameDiv = document.createElement('div');
-            nameDiv.className = 'name';
-            nameDiv.textContent = names[i];
-
-            const descriptionDiv = document.createElement('div');
-            descriptionDiv.className = 'description';
-            descriptionDiv.textContent = descriptions[i];
-            
-            card.appendChild(nameDiv);
-            card.appendChild(descriptionDiv);
-            container.appendChild(card);
-        }
-		document.getElementById("profile-link").style.backgroundColor = "white";
-    	document.getElementById("plink").style.color = "#425c5a";
 </script>
 </script>
 </body>
