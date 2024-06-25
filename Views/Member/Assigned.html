@@ -121,14 +121,8 @@
             descriptionDiv.className = 'description';
             descriptionDiv.textContent = descriptions[i];
 
-            const buttonDiv = document.createElement('a');
-            buttonDiv.className = 'button';
-            buttonDiv.textContent = 'Mark as Completed';
-            buttonDiv.href = '#'; 
-
             card.appendChild(nameDiv);
             card.appendChild(descriptionDiv);
-            card.appendChild(buttonDiv);
             container.appendChild(card);
         }
 		document.getElementById("profile-link").style.backgroundColor = "white";
