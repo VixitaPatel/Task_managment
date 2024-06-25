@@ -272,7 +272,7 @@ exports.g_admin_profile = async (req, res) => {
         const admin_token = req.cookies.jwtoken;
         const verified_admin = jwt.verify(admin_token, "ad123");
         const email = verified_admin.email;
-        const user = await User.find({ email: email });
+        const user = await User.findOne({ email: email });
         // const program = await Program.findById(student[0].ProgramRegistered).populate('DegreeOffered BranchOffered CourseOffered');
 
         // const program = await Program.findById(student.ProgramRegistered).populate('DegreeOffered BranchOffered CourseOffered');
@@ -570,8 +570,8 @@ exports.p_changepwdmem = async (req, res) => {
 // }
 
 
-exports.g_viewtask = async (req, res) => {
-    try {
+exports.g_viewtask = async (req, res) => {      // done
+    try { 
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "ad123");
         const Email = verify_one.email;
@@ -588,7 +588,7 @@ exports.g_viewtask = async (req, res) => {
     }
 };
 
-exports.g_assigntask = async (req, res) => {
+exports.g_assigntask = async (req, res) => {    //done
     try {
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "ad123");
@@ -604,16 +604,16 @@ exports.g_assigntask = async (req, res) => {
     }
 };
 
-exports.p_assigntask = async (req, res) => {
+exports.p_assigntask = async (req, res) => {     //
     try {
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "ad123");
         const Email = verify_one.email;
-        const user = await User.find({ email: Email })
+        const user = await User.findOne({ email: Email })
         const { taskname, email, description } = req.body;
 
         // Find the employee by ID
-        const employee = await User.find({ email: email });
+        const employee = await User.findOne({ email: email });
         if (!employee) {
             return res.status(404).send('Employee not found');
         }
@@ -622,8 +622,8 @@ exports.p_assigntask = async (req, res) => {
         const assignment = new Assignment({
             title: taskname,
             description: description,
-            assignedTo: employee[0]._id,
-            assignedBy: user[0]._id, // Assuming req.user contains the admin's user info
+            assignedTo: employee._id,
+            assignedBy: user._id, // Assuming req.user contains the admin's user info
            
         });
         console.log(assignment);
@@ -638,7 +638,7 @@ exports.p_assigntask = async (req, res) => {
     }
 };
 
-exports.g_pendingtask = async (req, res) => {
+exports.g_pendingtask = async (req, res) => {     // done
     try {
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "ad123");
@@ -659,7 +659,7 @@ exports.g_pendingtask = async (req, res) => {
 };
 
 
-exports.g_completedtask = async (req, res) => {
+exports.g_completedtask = async (req, res) => {     //done
     try {
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "ad123");
@@ -679,7 +679,27 @@ exports.g_completedtask = async (req, res) => {
     }
 };
 
-exports.g_pendingtask_mem = async (req, res) => {
+
+exports.g_viewtask_mem = async (req, res) => {         //done
+    try { 
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "mem123");
+        const Email = verify_one.email;
+        const user = await User.find({ email: Email })
+
+        const assignments = await Assignment.find({ assignedTo: user }).populate('assignedBy', 'name email');
+       
+        res.render("Member/viewtaskmem", {user, assignments});
+
+        // res.status(200).send('Task assigned successfully');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('An error occurred while assigning the task');
+    }
+};
+
+
+exports.g_pendingtask_mem = async (req, res) => {    // done
     try {
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "mem123");
@@ -687,7 +707,7 @@ exports.g_pendingtask_mem = async (req, res) => {
         const user = await User.findOne({ email: Email })
         
         console.log(user);
-        const assignments = await Assignment.find({ assignedTo: user, status: 'incomplete' });
+        const assignments = await Assignment.find({ assignedTo: user,  status: { $in: ['incomplete', 'pending_review'] }}).populate('assignedBy', 'name email');
         console.log(assignments);
         console.log("heyyyyyyy");
         res.render("Member/pendingtaskmem" ,{user, assignments});
@@ -700,15 +720,15 @@ exports.g_pendingtask_mem = async (req, res) => {
 };
 
 
-exports.g_completedtask_mem = async (req, res) => {
-    try {
+exports.g_completedtask_mem = async (req, res) => {     // done
+    try { 
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "mem123");
         const Email = verify_one.email;
         const user = await User.findOne({ email: Email })
         
         console.log(user);
-        const assignments = await Assignment.find({ assignedBy: user, status: 'completed' })
+        const assignments = await Assignment.find({ assignedTo: user, status: 'completed' }).populate('assignedBy', 'name email');
         console.log(assignments);
         console.log("heyyyyyyy");
         res.render("Member/completedtaskmem" ,{user, assignments});
@@ -746,7 +766,7 @@ exports.p_varifytask = async (req, res) => {
         const verify_one = jwt.verify(stored_token, "ad123");
         const Email = verify_one.email;
         const user = await User.find({ email: Email })
-        console.log(hooo);
+        console.log("hooo");
         console.log(req.body);
        
         if (req.body.done) {
@@ -754,16 +774,212 @@ exports.p_varifytask = async (req, res) => {
             
         await Assignment.findByIdAndUpdate(assignment._id, { status: 'completed' });
             // const course = await Assignment.findOne({ _id: req.body.done });
-            res.render("Admin/varifytask", { user });
+            res.redirect("varifytask");
         }
         else {
-            const { taskId } = req.params;
-        await Assignment.findByIdAndUpdate(taskId, { status: 'incompleted' });
+            const assignment = await Assignment.findOne({ _id: req.body.undone });
+        await Assignment.findByIdAndUpdate(assignment._id, { status: 'incomplete' });
             // const course = await Assignment.findOne({ _id: req.body.done });
-            res.render("Admin/varifytask", { user });
+            res.redirect("varifytask");
         }
     } catch (err) {
         console.error(err);
         res.status(500).send("An error occured while fetching course data");
     }
 }
+
+exports.p_pendingtask_mem = async (req, res) => {      //done  second time click
+    try {
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "mem123");
+        const Email = verify_one.email;
+        const user = await User.find({ email: Email })
+        console.log("hooo");
+        console.log(req.body);
+       
+        if (req.body.varify) {
+            const assignment = await Assignment.findOne({ _id: req.body.varify });
+            
+        await Assignment.findByIdAndUpdate(assignment._id, { status: 'pending_review' });
+            // const course = await Assignment.findOne({ _id: req.body.done });
+            res.redirect("pendingtaskmem");
+        }
+       
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occured while fetching course data");
+    }
+}
+
+exports.g_updateadmin = async (req, res) => {
+    try {
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "ad123");
+        const Email = verify_one.email;
+        const user = await User.findOne({ email: Email })
+
+        res.render("Admin/updateadmin.ejs", { user });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occured while updating faculty data");
+    }
+}
+
+exports.p_updateadmin = async (req, res) => {
+    try {
+        
+
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "ad123");
+        const Email = verify_one.email;
+        const user = await User.findOne({ email: Email })
+
+        const update = {
+             name: req.body.name,
+            email: req.body.email,
+            role: req.body.role, 
+            address: req.body.address,
+            country: req.body.country,
+            city: req.body.city,
+           
+        }
+        console.log(update);
+
+        await User.updateOne({ _id: user._id }, update);
+        console.log("updateddd");
+
+        // const title = "SUCCESS";
+        // const message = "Faculty details updated!";
+        // const icon = "success";
+        // const href = "/viewfaculty";
+        res.redirect("admin-profile");
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occured while updating faculty data");
+    }
+}
+
+exports.g_updatemember = async (req, res) => {
+    try {
+        console.log("0");
+        const stored_token = req.cookies.jwtoken;
+       
+        const verify_one = jwt.verify(stored_token, "mem123");
+        console.log("1");
+        const Email = verify_one.email;
+        const user = await User.findOne({ email: Email })
+        console.log("2");
+        res.render("Member/updatemember.ejs", { user });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occured while updating faculty data");
+    }
+}
+
+exports.p_updatemember = async (req, res) => {
+    try {
+        
+
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "mem123");
+        const Email = verify_one.email;
+        const user = await User.findOne({ email: Email })
+
+        const update = {
+             name: req.body.name,
+            email: req.body.email,
+            role: req.body.role, 
+            address: req.body.address,
+            country: req.body.country,
+            city: req.body.city,
+           
+        }
+        console.log(update);
+
+        await User.updateOne({ _id: user._id }, update);
+        console.log("updateddd");
+
+        // const title = "SUCCESS";
+        // const message = "Faculty details updated!";
+        // const icon = "success";
+        // const href = "/viewfaculty";
+        res.redirect("mem-profile");
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occured while updating faculty data");
+    }
+}
+
+async function isLoggedInadmin(req, res, next) {
+    try {
+
+        const token = req.cookies.jwtoken;
+        console.log(token);
+        const verifyuser = jwt.verify(token, "ad123");
+        console.log(verifyuser);
+
+        const admin = await User.findOne({ email: verifyuser.email });
+        console.log(admin.email);
+
+        //next();
+
+    } catch (err) {
+        res.send(err);
+    }
+};
+exports.logoutadmin = async (req, res, next) => {
+    try {
+        await isLoggedInadmin(req);
+        res.clearCookie("jwtoken");
+        console.log("Logout successfully!!");
+        // const title = "SUCCESS";
+        // const message = "You have logged out successfully!";
+        // const icon = "success";
+        // const href = "/";
+        // res.render("Admin/alert.ejs", { title, message, icon, href });
+        res.render("Admin/adminlogin");
+
+    } catch (err) {
+        // This block will only execute if isLoggedInstudent returns false
+        res.status(500).send("first you should login and then try to logout");
+    }
+};
+
+async function isLoggedInmember(req, res, next) {
+    try {
+
+        const token = req.cookies.jwtoken;
+        console.log(token);
+        const verifyuser = jwt.verify(token, "mem123");
+        console.log(verifyuser);
+
+        const admin = await User.findOne({ email: verifyuser.email });
+        console.log(admin.email);
+
+        //next();
+
+    } catch (err) {
+        res.send(err);
+    }
+};
+exports.logoutmember = async (req, res, next) => {
+    try {
+        await isLoggedInmember(req);
+        res.clearCookie("jwtoken");
+        console.log("Logout successfully!!");
+        // const title = "SUCCESS";
+        // const message = "You have logged out successfully!";
+        // const icon = "success";
+        // const href = "/";
+        // res.render("Admin/alert.ejs", { title, message, icon, href });
+        res.render("Member/memberlogin");
+
+    } catch (err) {
+        // This block will only execute if isLoggedInstudent returns false
+        res.status(500).send("first you should login and then try to logout");
+    }
+};

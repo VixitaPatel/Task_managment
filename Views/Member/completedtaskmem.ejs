@@ -23,35 +23,35 @@
 					<div class="img_holder">
 						<img src="img/member.png" alt="profile_pic">
 					</div>
-					<p class="title">Vinit Mehta</p>
-					<p class="sub_title">vinitmehta383@gmail.com</p>
+					<p class="title"><%= user.name%></p>
+					<p class="sub_title"><%= user.email%>e</p>
 				</div>
 				<ul class="menu">
-					<li><a href="dashboard.html">
+					<li><a href="/mem-profile">
 						<span class="icon"><i class="fas fa-home"></i></span>
 						<span class="text">Your Profile</span>
 					</a></li>
-					<li><a href="#">
+					<li><a href="/viewtaskmem">
 						<span class="icon"><i class="fas fa-file-alt"></i></span>
 						<span class="text">Assigned tasks</span>
 					</a></li>
-					<li><a href="#">
+					<li><a href="/pendingtaskmem">
 						<span class="icon"><i class="fas fa-chart-pie"></i></span>
-						<span class="text">Pending tasks</span>
+						<span class="text">Pending Tasks</span>
 					</a></li>
-					<li><a href="#" id="profile-link">
+					<li><a href="/completedtaskmem">
 						<span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
-						<span class="text" id="plink">Completed tasks</span>
+						<span class="text">Completed tasks</span>
 					</a></li>
-                    <li><a href="#">
+                    <li><a href="/updatemember">
 						<span class="icon"><i class="fa fa-user" aria-hidden="true"></i></span>
 						<span class="text">Update Profile</span>
 					</a></li>
-                    <li><a href="#" id="profile-link">
+                    <li><a href="/changepwdmem">
 						<span class="icon"><i class="fa fa-lock"></i></span>
-						<span class="text" id="plink">Change Password</span>
+						<span class="text">Change Password</span>
 					</a></li>
-                    <li><a href="#">
+                    <li><a href="/logoutmember">
 						<span class="icon"><i class="fa fa-power-off" aria-hidden="true"></i></span>
 						<span class="text">Logout</span>
 					</a></li>
@@ -75,7 +75,7 @@
 					<div class="cardtemplate">
 						<div class="name"><%= assignment.title %></div>
 						<div class="description"><%= assignment.description %></div>
-						<div class="assigned_to">Assigned To: <%= assignment.assignedTo.name %></div>
+						<div class="assigned_to">Assigned By: <%= assignment.assignedBy.name %></div>
 					</div>
 				<% }); %>
 			</div>

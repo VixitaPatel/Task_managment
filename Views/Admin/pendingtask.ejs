@@ -23,39 +23,39 @@
 					<div class="img_holder">
 						<img src="https://static.thenounproject.com/png/2303078-200.png" alt="profile_pic">
 					</div>
-					<p class="title">Vinit Mehta</p>
-					<p class="sub_title">vinitmehta383@gmail.com</p>
+					<p class="title"><%= user.name%></p>
+					<p class="sub_title"><%= user.email%>e</p>
 				</div>
 				<ul class="menu">
-					<li><a href="#">
+					<li><a href="/admin-profile">
 						<span class="icon"><i class="fas fa-home"></i></span>
 						<span class="text">Your Profile</span>
 					</a></li>
-					<li><a href="#">
+					<li><a href="/viewtask">
 						<span class="icon"><i class="fas fa-file-alt"></i></span>
 						<span class="text">Assign tasks</span>
 					</a></li>
-                    <li><a href="#">
+					<li><a href="/varifytask">
 						<span class="icon"><i class="fa fa-tasks" aria-hidden="true"></i></span>
 						<span class="text">Verify tasks</span>
 					</a></li>
-					<li><a href="#" id="profile-link">
+					<li><a href="/pendingtask">
 						<span class="icon"><i class="fas fa-chart-pie"></i></span>
-						<span class="text" id="plink">Pending tasks</span>
+						<span class="text">Pending tasks</span>
 					</a></li>
-					<li><a href="#">
+					<li><a href="/completedtask">
 						<span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
 						<span class="text">Completed tasks</span>
 					</a></li>
-                    <li><a href="#">
+                    <li><a href="/updateadmin">
 						<span class="icon"><i class="fa fa-user" aria-hidden="true"></i></span>
 						<span class="text">Update Profile</span>
 					</a></li>
-                    <li><a href="#" id="profile-link">
+                    <li><a href="/changepwdadmin">
 						<span class="icon"><i class="fa fa-lock"></i></span>
-						<span class="text" id="plink">Change Password</span>
+						<span class="text">Change Password</span>
 					</a></li>
-                    <li><a href="#">
+                    <li><a href="/logoutadmin">
 						<span class="icon"><i class="fa fa-power-off" aria-hidden="true"></i></span>
 						<span class="text">Logout</span>
 					</a></li>

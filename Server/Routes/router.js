@@ -32,6 +32,12 @@ route.post('/member-registration',controller.p_member_registration);
 route.get('/admin-profile', controller.g_admin_profile);
 route.get('/mem-profile', controller.g_mem_profile);
 
+route.get('/updateadmin', controller.g_updateadmin);  
+route.post('/updateadmin', controller.p_updateadmin);
+
+route.get('/updatemember', controller.g_updatemember);
+route.post('/updatemember', controller.p_updatemember);
+
 route.get('/changepwdadmin', controller.g_changepwdadmin);
 route.post('/changepwdadmin', controller.p_changepwdadmin);
 
@@ -42,16 +48,25 @@ route.post('/changepwdmem', controller.p_changepwdmem);
 // route.post('/varifyotpadmin', controller.p_varifyotpadmin);
 // route.post('/newpassadmin', controller.p_newpassadmin);
 
-route.get('/viewtask', controller.g_viewtask);
+route.get('/viewtask', controller.g_viewtask);     //done
 
-route.get('/assigntask', controller.g_assigntask);
-route.post('/assigntask', controller.p_assigntask);
+route.get('/assigntask', controller.g_assigntask);   //done
+route.post('/assigntask', controller.p_assigntask);     //done
 
-route.get('/pendingtask', controller.g_pendingtask);
-route.get('/completedtask', controller.g_completedtask);
+route.get('/pendingtask', controller.g_pendingtask);     // done
+route.get('/completedtask', controller.g_completedtask);   //done
 
-route.get('/pendingtaskmem', controller.g_pendingtask_mem);
-route.get('/completedtaskmem', controller.g_completedtask_mem);
+
+route.get('/varifytask', controller.g_varifytask);  
+route.post('/varifytask', controller.p_varifytask);
+
+route.get('/viewtaskmem', controller.g_viewtask_mem);      //done
+route.get('/pendingtaskmem', controller.g_pendingtask_mem);   // done but not display
+route.post('/pendingtaskmem', controller.p_pendingtask_mem);  //done
+route.get('/completedtaskmem', controller.g_completedtask_mem);   // done
+
+route.get('/logoutadmin', controller.logoutadmin);
+route.get('/logoutmember', controller.logoutmember);
 
 
 module.exports = route

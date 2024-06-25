@@ -9,7 +9,7 @@
 "https://img.icons8.com/?size=100&id=xF9ZbyGPFTC2&format=png&color=000000"
             type="image/x-icon"
         />
-	<link rel="stylesheet" href="../../Assets/css/assignedmem.css">
+	<link rel="stylesheet" href="css/assignedmem.css">
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -21,42 +21,41 @@
 			<div class="vertical_bar">
 				<div class="profile_info">
 					<div class="img_holder">
-						<img src="../../Assets/img/member.png" alt="profile_pic">
+						<img src="img/member.png" alt="profile_pic">
 					</div>
-					<p class="title">Vinit Mehta</p>
-					<p class="sub_title">vinitmehta383@gmail.com</p>
+					<p class="title"><%= user.name%></p>
+					<p class="sub_title"><%= user.email%>e</p>
 				</div>
 				<ul class="menu">
-					<li><a href="dashboard.html">
+					<li><a href="/mem-profile">
 						<span class="icon"><i class="fas fa-home"></i></span>
 						<span class="text">Your Profile</span>
 					</a></li>
-					<li><a href="#" id="profile-link">
+					<li><a href="/viewtaskmem">
 						<span class="icon"><i class="fas fa-file-alt"></i></span>
-						<span class="text" id="plink">Assigned tasks</span>
+						<span class="text">Assigned tasks</span>
 					</a></li>
-					<li><a href="#">
+					<li><a href="/pendingtaskmem">
 						<span class="icon"><i class="fas fa-chart-pie"></i></span>
-						<span class="text">Pending tasks</span>
+						<span class="text">Pending Tasks</span>
 					</a></li>
-					<li><a href="#">
+					<li><a href="/completedtaskmem">
 						<span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
 						<span class="text">Completed tasks</span>
 					</a></li>
-                    <li><a href="#">
+                    <li><a href="/updatemember">
 						<span class="icon"><i class="fa fa-user" aria-hidden="true"></i></span>
 						<span class="text">Update Profile</span>
 					</a></li>
-                    <li><a href="#" id="profile-link">
+                    <li><a href="/changepwdmem">
 						<span class="icon"><i class="fa fa-lock"></i></span>
-						<span class="text" id="plink">Change Password</span>
+						<span class="text">Change Password</span>
 					</a></li>
-                    <li><a href="#">
+                    <li><a href="/logoutmember">
 						<span class="icon"><i class="fa fa-power-off" aria-hidden="true"></i></span>
 						<span class="text">Logout</span>
 					</a></li>
 				</ul>
-
 				
 			</div>
 		</div>
@@ -72,12 +71,25 @@
 
 			<div class="container" id="card-container">
 				
+				<% assignments.forEach(function(assignment) { %>
+					<div class="cardtemplate">
+						<div class="name"><%= assignment.title %></div>
+						<div class="description"><%= assignment.description %></div>
+						<div class="assigned_to">Assigned by: <%= assignment.assignedBy.name %></div>
+						<div class="buttonContainer">
+							<form action="/pendingtaskmem" method="POST">
+								<button type="submit"  name="varify"  value="<%= assignment._id %>" class="button" >Done</button>
+							</form>
+							
+						</div>
+					</div>
+				<% }); %>
 			</div>
 		</div>
 		</div>
 	</div>
 
-<script>
+<!-- <script>
 	var hamburger = document.querySelector(".hamburger");
 	var wrapper  = document.querySelector(".wrapper");
 	var backdrop = document.querySelector(".backdrop");
@@ -121,13 +133,40 @@
             descriptionDiv.className = 'description';
             descriptionDiv.textContent = descriptions[i];
 
+			const buttonDiv = document.createElement('a');
+            buttonDiv.className = 'button';
+            buttonDiv.textContent = 'Mark as Completed';
+            buttonDiv.href = '#'; 
+			buttonDiv.addEventListener('click', function(event) {
+				event.preventDefault();
+				buttonDiv.textContent = 'Pending to be Verified';
+				buttonDiv.style.pointerEvents = 'none'; // Disable further clicks
+    		});
+            
             card.appendChild(nameDiv);
             card.appendChild(descriptionDiv);
+			card.appendChild(buttonDiv);
             container.appendChild(card);
         }
 		document.getElementById("profile-link").style.backgroundColor = "white";
     	document.getElementById("plink").style.color = "#425c5a";
-</script>
+</script> -->
+
+<script>
+	var hamburger = document.querySelector(".hamburger");
+	var wrapper  = document.querySelector(".wrapper");
+	var backdrop = document.querySelector(".backdrop");
+
+	hamburger.addEventListener("click", function(){
+		wrapper.classList.add("active");
+	});
+
+	backdrop.addEventListener("click", function(){
+		wrapper.classList.remove("active");
+	});
+
+	document.getElementById('profile-link').style.backgroundColor = "white";
+	document.getElementById('plink').style.color = "#425c5a";
 </script>
 </body>
 </html>
