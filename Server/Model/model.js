@@ -86,7 +86,47 @@ const userSchema = new mongoose.Schema({
 // };
 
 
-const taskSchema = new mongoose.Schema({
+// const taskSchema = new mongoose.Schema({
+//   title: {
+//     type: String,
+//     required: true,
+//     trim: true
+//   },
+//   description: {
+//     type: String,
+//     required: true,
+//     trim: true
+//   },
+//   dueDate: {
+//     type: Date,
+//     required: true
+//   },
+  
+//   status: {
+//     type: String,
+//     enum: ['incomplete', 'pending_review', 'completed'],
+//     default: 'incomplete'
+//   },
+// //   labels: {
+// //     type: [String]
+// //   },
+  
+//   priority: {
+//     type: String,
+//     enum: ['low', 'medium', 'high'],
+//     default: 'medium'
+//   },
+//   completionDate: {
+//     type: Date
+//   },
+  
+  
+// }, {
+//   timestamps: true
+// });
+
+
+const assignmentSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -94,13 +134,13 @@ const taskSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
+    // required: true,
     trim: true
   },
-  dueDate: {
-    type: Date,
-    required: true
-  },
+  // dueDate: {
+  //   type: Date,
+  //   required: true
+  // },
   
   status: {
     type: String,
@@ -111,27 +151,15 @@ const taskSchema = new mongoose.Schema({
 //     type: [String]
 //   },
   
-  priority: {
-    type: String,
-    enum: ['low', 'medium', 'high'],
-    default: 'medium'
-  },
-  completionDate: {
-    type: Date
-  },
+  // priority: {
+  //   type: String,
+  //   enum: ['low', 'medium', 'high'],
+  //   default: 'medium'
+  // },
+  // completionDate: {
+  //   type: Date
+  // },
   
-  
-}, {
-  timestamps: true
-});
-
-
-const assignmentSchema = new mongoose.Schema({
-    task: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Task',
-      required: true
-    },
     assignedTo: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User', // Reference to the User schema
@@ -142,13 +170,16 @@ const assignmentSchema = new mongoose.Schema({
       ref: 'User', // Reference to the User schema
       required: true
     },
-    assignedAt: {
-      type: Date,
-      default: Date.now
-    }
+    // assignedAt: {
+    //   type: Date,
+    //   default: Date.now
+    // },
+    
+  },{
+    timestamps: true
   });
   const User = mongoose.model('User', userSchema);
-  const Task = mongoose.model('Task', taskSchema);
+  // const Task = mongoose.model('Task', taskSchema);
   const Assignment = mongoose.model('Assignment', assignmentSchema);
 
   
@@ -180,5 +211,5 @@ app.use(
 
 // app.use(passport.initialize());
 // app.use(passport.session());
-  module.exports = {User,Task, Assignment};
+  module.exports = {User, Assignment};
   

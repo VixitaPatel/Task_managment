@@ -9,7 +9,7 @@
 "https://img.icons8.com/?size=100&id=xF9ZbyGPFTC2&format=png&color=000000"
             type="image/x-icon"
         />
-	<link rel="stylesheet" href="../../Assets/css/assignedmem.css">
+	<link rel="stylesheet" href="css/assignedmem.css">
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -21,7 +21,7 @@
 			<div class="vertical_bar">
 				<div class="profile_info">
 					<div class="img_holder">
-						<img src="https://static.thenounproject.com/png/2303078-200.png" alt="profile_pic">
+						<img src="img/member.png" alt="profile_pic">
 					</div>
 					<p class="title">Vinit Mehta</p>
 					<p class="sub_title">vinitmehta383@gmail.com</p>
@@ -33,19 +33,15 @@
 					</a></li>
 					<li><a href="#">
 						<span class="icon"><i class="fas fa-file-alt"></i></span>
-						<span class="text">Assign tasks</span>
-					</a></li>
-                    <li><a href="#">
-						<span class="icon"><i class="fa fa-tasks" aria-hidden="true"></i></span>
-						<span class="text">Verify tasks</span>
-					</a></li>
-					<li><a href="#">
-						<span class="icon"><i class="fas fa-chart-pie"></i></span>
-						<span class="text">Pending tasks</span>
+						<span class="text">Assigned tasks</span>
 					</a></li>
 					<li><a href="#" id="profile-link">
+						<span class="icon"><i class="fas fa-chart-pie"></i></span>
+						<span class="text" id="plink">Pending tasks</span>
+					</a></li>
+					<li><a href="#">
 						<span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
-						<span class="text" id="plink">Completed tasks</span>
+						<span class="text">Completed tasks</span>
 					</a></li>
                     <li><a href="#">
 						<span class="icon"><i class="fa fa-user" aria-hidden="true"></i></span>
@@ -75,13 +71,19 @@
 			</div>
 
 			<div class="container" id="card-container">
-				
+				<% assignments.forEach(assignment => { %>
+					<div class="cardtemplate">
+						<div class="name"><%= assignment.title %></div>
+						<div class="description"><%= assignment.description %></div>
+						<div class="assigned_to">Assigned To: <%= assignment.assignedTo.name %></div>
+					</div>
+				<% }); %>
 			</div>
 		</div>
 		</div>
 	</div>
 
-<script>
+<!-- <script>
 	var hamburger = document.querySelector(".hamburger");
 	var wrapper  = document.querySelector(".wrapper");
 	var backdrop = document.querySelector(".backdrop");
@@ -131,7 +133,23 @@
         }
 		document.getElementById("profile-link").style.backgroundColor = "white";
     	document.getElementById("plink").style.color = "#425c5a";
-</script>
+</script> -->
+
+<script>
+	var hamburger = document.querySelector(".hamburger");
+	var wrapper  = document.querySelector(".wrapper");
+	var backdrop = document.querySelector(".backdrop");
+
+	hamburger.addEventListener("click", function(){
+		wrapper.classList.add("active");
+	});
+
+	backdrop.addEventListener("click", function(){
+		wrapper.classList.remove("active");
+	});
+
+	document.getElementById('profile-link').style.backgroundColor = "white";
+	document.getElementById('plink').style.color = "#425c5a";
 </script>
 </body>
 </html>

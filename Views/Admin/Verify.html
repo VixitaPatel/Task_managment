@@ -75,13 +75,26 @@
 			</div>
 
 			<div class="container" id="card-container">
-				
+				<% assignments.forEach(function(assignment) { %>
+					<div class="cardtemplate">
+						<div class="name"><%= assignment.assignedTo.name %></div>
+						<div class="description"><%= assignment.description %></div>
+						<div class="buttonContainer">
+							<form action="/varifytask" method="POST">
+								<button type="submit" name="done"  value="<%= assignment._id %> class="button" >Done</button>
+							</form>
+							<form action="/varifytask" method="POST">
+								<button type="submit" name="undone"  value="<%= assignment._id %> class="button">Undone</button>
+							</form>
+						</div>
+					</div>
+				<% }); %>
 			</div>
 		</div>
 		</div>
 	</div>
 
-<script>
+<!-- <script>
 	var hamburger = document.querySelector(".hamburger");
 	var wrapper  = document.querySelector(".wrapper");
 	var backdrop = document.querySelector(".backdrop");
@@ -154,7 +167,22 @@
         
 		document.getElementById("profile-link").style.backgroundColor = "white";
     	document.getElementById("plink").style.color = "#425c5a";
-</script>
+</script> -->
+
+<script>
+	var hamburger = document.querySelector(".hamburger");
+	var wrapper  = document.querySelector(".wrapper");
+	var backdrop = document.querySelector(".backdrop");
+	
+	hamburger.addEventListener("click", function(){
+		wrapper.classList.add("active");
+	})
+
+	backdrop.addEventListener("click", function(){
+		wrapper.classList.remove("active");
+	})
+	document.getElementById('profile-link').style.backgroundColor = "white";
+	document.getElementById('plink').style.color = "#425c5a";
 </script>
 </body>
 </html>

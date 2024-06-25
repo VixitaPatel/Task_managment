@@ -1,4 +1,4 @@
-var { User, Task, Assignemt } = require('../Model/model');
+var { User, Assignment } = require('../Model/model');
 
 
 const path = require("path");
@@ -452,121 +452,318 @@ exports.p_changepwdmem = async (req, res) => {
     }
 }
 
-exports.g_forgetpwdadmin = async (req, res) => {
-    try {
-        const stored_token = req.cookies.jwtoken;
-        const verify_one = jwt.verify(stored_token, "ad123");
-        const email = verify_one.email;
-        const user = await User.find({ email: email })
-        const otp =otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false });
-        req.session.otp = otp;
-        req.session.save(); 
+// exports.g_forgetpwdadmin = async (req, res) => {
+//     try {
+//         const stored_token = req.cookies.jwtoken;
+//         const verify_one = jwt.verify(stored_token, "ad123");
+//         const email = verify_one.email;
+//         const user = await User.find({ email: email })
+//         const otp =otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false });
+//         req.session.otp = otp;
+//         req.session.save(); 
 
-            // const hashedpwd = await bcrypt.hash(randomPass, saltRounds);
-            // await Admin.findOneAndUpdate({ 'Email_id': req.body.a_email }, { 'Password': hashedpwd }, { new: true })
+//             // const hashedpwd = await bcrypt.hash(randomPass, saltRounds);
+//             // await Admin.findOneAndUpdate({ 'Email_id': req.body.a_email }, { 'Password': hashedpwd }, { new: true })
 
-            let transporter = nodemailer.createTransport({
-                service: "gmail",
-                host: "smtp.daiict.ac.in",
-                port: 587,
-                auth: {
-                    user: '202101232@daiict.ac.in',
-                    pass: 'pmqnqyndofccxhkk'
-                },
-                tls: {
-                    rejectUnauthorized: false
-                }
-            });
+//             let transporter = nodemailer.createTransport({
+//                 service: "gmail",
+//                 host: "smtp.daiict.ac.in",
+//                 port: 587,
+//                 auth: {
+//                     user: '202101232@daiict.ac.in',
+//                     pass: 'pmqnqyndofccxhkk'
+//                 },
+//                 tls: {
+//                     rejectUnauthorized: false
+//                 }
+//             });
 
-            const mailOptions = {
-                from: '202101232@daiict.ac.in', // Sender's email address
-                to: 'vixitabhalodiya@gmail.com',//'202101234@daiict.ac.in', // Recipient's email address
-                subject: "OTP", // Subject of the email
-                text: 'This is a test email sent from Node.js using Nodemailer.',
-                html: `
-            <h2> Here your OTP. </h2>
+//             const mailOptions = {
+//                 from: '202101232@daiict.ac.in', // Sender's email address
+//                 to: 'vixitabhalodiya@gmail.com',//'202101234@daiict.ac.in', // Recipient's email address
+//                 subject: "OTP", // Subject of the email
+//                 text: 'This is a test email sent from Node.js using Nodemailer.',
+//                 html: `
+//             <h2> Here your OTP. </h2>
           
-            <p> <b> OTP : </b> ${otp} </p> 
+//             <p> <b> OTP : </b> ${otp} </p> 
                
-            `,
-            };
+//             `,
+//             };
 
-            console.log("mail continue again");
+//             console.log("mail continue again");
 
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    console.error('Error:', error);
-                } else {
-                    console.log('Email sent:', info.response);
-                }
-                // const title = "SUCCESS";
-                // const message = "Check your mail to access your new password";
-                // const icon = "success";
-                // const href = "/adminLogin";
-                res.render("Admin/passotpadmin", {otp });
-            })
+//             transporter.sendMail(mailOptions, (error, info) => {
+//                 if (error) {
+//                     console.error('Error:', error);
+//                 } else {
+//                     console.log('Email sent:', info.response);
+//                 }
+//                 // const title = "SUCCESS";
+//                 // const message = "Check your mail to access your new password";
+//                 // const icon = "success";
+//                 // const href = "/adminLogin";
+//                 res.render("Admin/passotpadmin", {otp });
+//             })
         
-    } catch (err) {
-        res.status(500).send("Internal Server Error");
-    }
-}
-exports.p_varifyotpadmin = async (req, res) => {
+//     } catch (err) {
+//         res.status(500).send("Internal Server Error");
+//     }
+// }
+// exports.p_varifyotpadmin = async (req, res) => {
+//     try {
+//         console.log("varifyyyyyyy");
+//         const enteredOtp = req.body.otp;
+//         console.log(enteredOtp);
+
+//         if (!req.session.otp) {
+//             return res.status(400).send('OTP not found in session');
+//         }
+
+//         if (enteredOtp === req.session.otp) {
+//             // OTP is correct, proceed with password reset or other actions
+//             req.session.otp = null; // Clear OTP from session after verification
+//             // res.send('OTP verified successfully');
+//         } else {
+//             // res.status(400).send('Invalid OTP');
+//             console.log("doneeee");
+//         }
+//         res.render("Admin/newpwdadmin");
+
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).send("An error occured while changing password!");
+//     }
+// }
+
+// exports.p_newpassadmin = async (req, res) => {
+//     try {
+//         console.log("helololoo");
+//         const stored_token = req.cookies.jwtoken;
+//         console.log(stored_token);
+//         const verify_one = jwt.verify(stored_token, "ad123");
+//         console.log(verify_one);
+//         const email = verify_one.email;
+
+//         const newpawd = req.body.newpass;
+//         console.log(req.body);
+
+        
+//         const user = await User.findOne({ email: email });
+
+        
+//         const hashedpwd = await bcrypt.hash(newpwd, saltRounds);
+//         user.password = hashedpwd;
+//         await user.save();
+//         console.log("sucessfully changed");
+
+//         // const title = "SUCCESS";
+//         // const message = "Password changed successfully!";
+//         // const icon = "success";
+//         // const href = "/adminhome";
+//         res.render("Admin/admin_sidenav", {user});
+
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).send("An error occured while changing password!");
+//     }
+// }
+
+
+exports.g_viewtask = async (req, res) => {
     try {
-        console.log("varifyyyyyyy");
-        const enteredOtp = req.body.otp;
-        console.log(enteredOtp);
-
-        if (!req.session.otp) {
-            return res.status(400).send('OTP not found in session');
-        }
-
-        if (enteredOtp === req.session.otp) {
-            // OTP is correct, proceed with password reset or other actions
-            req.session.otp = null; // Clear OTP from session after verification
-            // res.send('OTP verified successfully');
-        } else {
-            // res.status(400).send('Invalid OTP');
-            console.log("doneeee");
-        }
-        res.render("Admin/newpwdadmin");
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("An error occured while changing password!");
-    }
-}
-
-exports.p_newpassadmin = async (req, res) => {
-    try {
-        console.log("helololoo");
         const stored_token = req.cookies.jwtoken;
-        console.log(stored_token);
         const verify_one = jwt.verify(stored_token, "ad123");
-        console.log(verify_one);
-        const email = verify_one.email;
+        const Email = verify_one.email;
+        const user = await User.find({ email: Email })
 
-        const newpawd = req.body.newpass;
-        console.log(req.body);
+        const assignments = await Assignment.find({ assignedBy: user }).populate('assignedTo', 'name email');
+       
+        res.render("Admin/viewtask", {user, assignments});
 
-        
-        const user = await User.findOne({ email: email });
-
-        
-        const hashedpwd = await bcrypt.hash(newpwd, saltRounds);
-        user.password = hashedpwd;
-        await user.save();
-        console.log("sucessfully changed");
-
-        // const title = "SUCCESS";
-        // const message = "Password changed successfully!";
-        // const icon = "success";
-        // const href = "/adminhome";
-        res.render("Admin/admin_sidenav", {user});
-
+        // res.status(200).send('Task assigned successfully');
     } catch (err) {
         console.error(err);
-        res.status(500).send("An error occured while changing password!");
+        res.status(500).send('An error occurred while assigning the task');
+    }
+};
+
+exports.g_assigntask = async (req, res) => {
+    try {
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "ad123");
+        const Email = verify_one.email;
+        const user = await User.find({ email: Email })
+       
+        res.render("Admin/assigntask", {user});
+
+        // res.status(200).send('Task assigned successfully');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('An error occurred while assigning the task');
+    }
+};
+
+exports.p_assigntask = async (req, res) => {
+    try {
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "ad123");
+        const Email = verify_one.email;
+        const user = await User.find({ email: Email })
+        const { taskname, email, description } = req.body;
+
+        // Find the employee by ID
+        const employee = await User.find({ email: email });
+        if (!employee) {
+            return res.status(404).send('Employee not found');
+        }
+       console.log(employee);
+        // Create a new assignment
+        const assignment = new Assignment({
+            title: taskname,
+            description: description,
+            assignedTo: employee[0]._id,
+            assignedBy: user[0]._id, // Assuming req.user contains the admin's user info
+           
+        });
+        console.log(assignment);
+        await assignment.save();
+        console.log("saveee");
+        res.redirect("viewtask");
+
+        // res.status(200).send('Task assigned successfully');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('An error occurred while assigning the task');
+    }
+};
+
+exports.g_pendingtask = async (req, res) => {
+    try {
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "ad123");
+        const Email = verify_one.email;
+        const user = await User.findOne({ email: Email })
+        
+        console.log(user);
+        const assignments = await Assignment.find({ assignedBy: user, status: 'incomplete' }).populate('assignedTo', 'name email');
+        console.log(assignments);
+        console.log("heyyyyyyy");
+        res.render("Admin/pendingtask" ,{user, assignments});
+
+        // res.status(200).send('Task assigned successfully');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('An error occurred while assigning the task');
+    }
+};
+
+
+exports.g_completedtask = async (req, res) => {
+    try {
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "ad123");
+        const Email = verify_one.email;
+        const user = await User.findOne({ email: Email })
+        
+        console.log(user);
+        const assignments = await Assignment.find({ assignedBy: user, status: 'completed' }).populate('assignedTo', 'name email');
+        console.log(assignments);
+        console.log("heyyyyyyy");
+        res.render("Admin/completedtask" ,{user, assignments});
+
+        // res.status(200).send('Task assigned successfully');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('An error occurred while assigning the task');
+    }
+};
+
+exports.g_pendingtask_mem = async (req, res) => {
+    try {
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "mem123");
+        const Email = verify_one.email;
+        const user = await User.findOne({ email: Email })
+        
+        console.log(user);
+        const assignments = await Assignment.find({ assignedTo: user, status: 'incomplete' });
+        console.log(assignments);
+        console.log("heyyyyyyy");
+        res.render("Member/pendingtaskmem" ,{user, assignments});
+
+        // res.status(200).send('Task assigned successfully');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('An error occurred while assigning the task');
+    }
+};
+
+
+exports.g_completedtask_mem = async (req, res) => {
+    try {
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "mem123");
+        const Email = verify_one.email;
+        const user = await User.findOne({ email: Email })
+        
+        console.log(user);
+        const assignments = await Assignment.find({ assignedBy: user, status: 'completed' })
+        console.log(assignments);
+        console.log("heyyyyyyy");
+        res.render("Member/completedtaskmem" ,{user, assignments});
+
+        // res.status(200).send('Task assigned successfully');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('An error occurred while assigning the task');
+    }
+};
+
+
+exports.g_varifytask = async (req, res) => {
+    try {
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "ad123");
+        const Email = verify_one.email;
+        const user = await User.findOne({ email: Email })
+        
+        console.log(user);
+        const assignments = await Assignment.find({ assignedBy: user, status: 'pending_review' }).populate('assignedTo', 'name email');
+        console.log(assignments);
+        console.log("heyyyyyyy");
+        res.render("Admin/varifytask" ,{user, assignments});
+
+        // res.status(200).send('Task assigned successfully');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('An error occurred while assigning the task');
+    }
+};
+exports.p_varifytask = async (req, res) => {
+    try {
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "ad123");
+        const Email = verify_one.email;
+        const user = await User.find({ email: Email })
+        console.log(hooo);
+        console.log(req.body);
+       
+        if (req.body.done) {
+            const assignment = await Assignment.findOne({ _id: req.body.done });
+            
+        await Assignment.findByIdAndUpdate(assignment._id, { status: 'completed' });
+            // const course = await Assignment.findOne({ _id: req.body.done });
+            res.render("Admin/varifytask", { user });
+        }
+        else {
+            const { taskId } = req.params;
+        await Assignment.findByIdAndUpdate(taskId, { status: 'incompleted' });
+            // const course = await Assignment.findOne({ _id: req.body.done });
+            res.render("Admin/varifytask", { user });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occured while fetching course data");
     }
 }
-
-

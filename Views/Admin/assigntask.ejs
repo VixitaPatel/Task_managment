@@ -9,7 +9,7 @@
 "https://img.icons8.com/?size=100&id=xF9ZbyGPFTC2&format=png&color=000000"
             type="image/x-icon"
         />
-	<link rel="stylesheet" href="../../Assets/css/assigntask1.css">
+	<link rel="stylesheet" href="css/assigntask1.css">
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -31,7 +31,7 @@
 						<span class="icon"><i class="fas fa-home"></i></span>
 						<span class="text">Your Profile</span>
 					</a></li>
-					<li><a href="#" id="profile-link">
+					<li><a href="/viewtask" id="profile-link">
 						<span class="icon"><i class="fas fa-file-alt"></i></span>
 						<span class="text" id="plink">Assign tasks</span>
 					</a></li>
@@ -79,26 +79,26 @@
                 <hr>
 				<div class="details">
                     <div class="column">
-                        <form class="editform" id="myForm">
+                        <form class="editform" action="/assigntask" method="post" id="myForm">
 							<div class="form-group">
 								<div class="label-container">
-									<span class="label">Enter Username of Employee:</span>
+									<span class="label">Enter Task name:</span>
 								</div>
-								<input type="text" class="inputtext" placeholder="Username of Employee" required>
+								<input type="text" class="inputtext" name="taskname" placeholder="Username of Employee" required>
 							</div>
 							<hr>
 							<div class="form-group">
 								<div class="label-container">
 									<span class="label">Enter Email-Address of Employee:</span>
 								</div>
-								<input type="email" class="inputtext" placeholder="Email of Employee" required>
+								<input type="email" class="inputtext" name="email" placeholder="Email of Employee" required>
 							</div>
                             <hr>
                             <div class="form-group">
 								<div class="label-container">
 									<span class="label">Enter the description of task:</span>
 								</div>
-								<textarea id="form_message" name="message" class="inputtext" placeholder="Description of the task" rows="4" required="required" data-error="Please, leave us a message."></textarea
+								<textarea id="form_message" name="message" class="inputtext" name="description" placeholder="Description of the task" rows="4" required="required" data-error="Please, leave us a message."></textarea
                                     >
 							</div>
 							<hr>

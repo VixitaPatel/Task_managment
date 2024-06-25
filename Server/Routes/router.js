@@ -38,8 +38,20 @@ route.post('/changepwdadmin', controller.p_changepwdadmin);
 route.get('/changepwdmem', controller.g_changepwdmem);
 route.post('/changepwdmem', controller.p_changepwdmem);
 
-route.get('/forgetpwdadmin', controller.g_forgetpwdadmin);
-route.post('/varifyotpadmin', controller.p_varifyotpadmin);
-route.post('/newpassadmin', controller.p_newpassadmin);
+// route.get('/forgetpwdadmin', controller.g_forgetpwdadmin);
+// route.post('/varifyotpadmin', controller.p_varifyotpadmin);
+// route.post('/newpassadmin', controller.p_newpassadmin);
+
+route.get('/viewtask', controller.g_viewtask);
+
+route.get('/assigntask', controller.g_assigntask);
+route.post('/assigntask', controller.p_assigntask);
+
+route.get('/pendingtask', controller.g_pendingtask);
+route.get('/completedtask', controller.g_completedtask);
+
+route.get('/pendingtaskmem', controller.g_pendingtask_mem);
+route.get('/completedtaskmem', controller.g_completedtask_mem);
+
 
 module.exports = route
