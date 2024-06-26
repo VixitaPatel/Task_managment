@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!---Coding By CodingLab | www.codinglabweb.com--->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>TasksSimplify</title>
+    <link
+      rel="icon"
+      href="https://img.icons8.com/?size=100&id=xF9ZbyGPFTC2&format=png&color=000000"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="css/forgot.css" />
+  </head>
+  <body>
+    <section class="container">
+      <header>Forgot Password</header>
+      <form action="/forgetpwdmember" method="post" class="form" onsubmit="validateForm()">
+        <div class="input-box">
+            <div class="text">
+                <label>Enter the registered Email-Address</label>
+            </div>
+            <input type="email" id="otp" name="email" placeholder="Enter Email-Address" class="in" required/>
+        </div>
+        <button type="submit">Send OTP</button>
+      </form>
+    </section>
+  </body>
+</html>

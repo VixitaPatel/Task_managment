@@ -78,8 +78,9 @@
 				<% assignments.forEach(function(assignment) { %>
 					<div class="cardtemplate">
 						<div class="name"><%= assignment.title %></div>
-						<div class="description"><%= assignment.description %></div>
 						<div class="assigned_to">Assigned To: <%= assignment.assignedTo.name %> </div>
+						<div class="description"><%= assignment.description %></div>
+						
 						<div class="buttonContainer">
 							<form action="/varifytask" method="POST">
 								<button type="submit" name="done"   value="<%= assignment._id %>" class="button" >Done</button>

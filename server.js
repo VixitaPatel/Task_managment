@@ -19,7 +19,7 @@ const connectDB=require("./Server/Database/connection");
 dotenv.config({path : 'config.env'});
 const app=express();
 
-const PORT = 8000;
+const PORT = 8030;
 app.use(session({
     secret: 'your-secret-key', // Change this to a secure random key
     resave: false,

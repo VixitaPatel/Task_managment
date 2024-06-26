@@ -11,7 +11,7 @@
       href="https://img.icons8.com/?size=100&id=xF9ZbyGPFTC2&format=png&color=000000"
       type="image/x-icon"
     />
-    <link rel="stylesheet" href="../../../Assets/css/forgot.css" />
+    <link rel="stylesheet" href="css/forgot.css" />
   </head>
   <body>
     <section class="container">
@@ -19,11 +19,12 @@
       <form action="/varifyotpadmin" method="post" class="form" onsubmit="validateForm()">
         <div class="input-box">
             <div class="text">
-                <label>Enter the registered Email-Address</label>
+                <label>Enter the OTP sent to your registered Email to proceed further</label>
             </div>
-            <input type="email" id="otp" name="otp" placeholder="Enter Email-Address" class="in" required/>
+            <input type="number" id="otp" name="otp" placeholder="Enter OTP" class="in" required/>
         </div>
-        <button type="submit">Send OTP</button>
+        
+        <button type="submit">Verify OTP</button>
       </form>
     </section>
   </body>

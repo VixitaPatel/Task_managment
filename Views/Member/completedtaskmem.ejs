@@ -74,8 +74,9 @@
 				<% assignments.forEach(assignment => { %>
 					<div class="cardtemplate">
 						<div class="name"><%= assignment.title %></div>
-						<div class="description"><%= assignment.description %></div>
 						<div class="assigned_to">Assigned By: <%= assignment.assignedBy.name %></div>
+						<div class="description"><%= assignment.description %></div>
+						
 					</div>
 				<% }); %>
 			</div>

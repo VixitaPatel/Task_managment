@@ -63,6 +63,12 @@ exports.p_admin_registration = async (req, res) => {
             city: req.body.city,
             isAdmin: true
         })
+        const user = await User.findOne({ email: req.body.email  , isAdmin : true});
+        if(user)
+            {
+                console.log("already exists");
+                res.redirect("admin-registration");
+            }
         await newuser.save();
         res.redirect("/admin-login");
 
@@ -93,6 +99,14 @@ exports.p_member_registration = async (req, res) => {
         })
         console.log("falseeeeeee");
         console.log(newuser);
+        const user = await User.findOne({ email: req.body.email  , isAdmin : false});
+        if(user)
+            {
+                console.log(user);
+                console.log("already exists");
+                res.redirect("admin-registration");
+                return;
+            }
         await newuser.save();
         console.log("sucess");
         res.redirect("/member-login");
@@ -153,7 +167,8 @@ exports.p_admin_login = async (req, res) => {
         console.log("why");
         const user = await User.findOne({ email: req.body.email });
         console.log("did you ?");
-        if (user) {
+        if (user && user.isAdmin==true) {
+            console.log("yesss");
             const result = await bcrypt.compare(req.body.password, user.password);
 
             if (result) {
@@ -165,7 +180,7 @@ exports.p_admin_login = async (req, res) => {
                     httpOnly: true
                 });
                 console.log("vinit");
-                res.render("Admin/admin_sidenav", { user });
+                res.render("Admin/admin_profile", { user });
             } else {
                 console.log("helli");
                 console.log("not match");
@@ -185,7 +200,7 @@ exports.p_member_login = async (req, res) => {
     try {
         // check if the user exists
         const user = await User.findOne({ email: req.body.email });
-        if (user) {
+        if (user && user.isAdmin==false) {
             //check if password matches
             const result = await bcrypt.compare(req.body.password, user.password);
             // const result = await req.body.f_password === user.Password;
@@ -210,7 +225,7 @@ exports.p_member_login = async (req, res) => {
                 // const verify_one = jwt.verify(token, secret);
                 // console.log(verify_one);
                 console.log(user);
-                res.render("Member/member_sidenav",{user});
+                res.render("Member/mem_profile",{user});
             } else {
                 console.log("not match");
                 // const title = "ERROR";
@@ -232,35 +247,7 @@ exports.p_member_login = async (req, res) => {
     }
 }
 
-// exports.g_mem_profile = async (req, res) => {
-//     try {
 
-//         const userId = req.query.userId;
-//         console.log(userId);
-//         // const userId = req.session.userId;
-
-//         // Fetch user information from the database
-//         const user = await User.findById(userId);
-//         // const ID = req.body.stud_id;     //Student as a schema name?.populate('ProgramRegistered')
-//         // const student = await Student.findOne(_id = req.user);
-//         // const Student_token = req.cookies.jwtokenstudent;
-//         // const verified_student = jwt.verify(Student_token, "sagar1");
-//         // const email = verified_student.email_id;
-//         // const student = await Student.find({ Email_id: email });
-//         // const program = await Program.findById(student[0].ProgramRegistered).populate('DegreeOffered BranchOffered CourseOffered');
-
-//         // const program = await Program.findById(student.ProgramRegistered).populate('DegreeOffered BranchOffered CourseOffered');
-//          console.log(user);
-//         res.render("Member/mem_profile.ejs", { user });
-
-        
-       
-
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send('Internal Server Error');
-//     }
-// }
 exports.g_admin_profile = async (req, res) => {
     try {
         console.log("Cookies: ", req.cookies);
@@ -298,7 +285,7 @@ exports.g_mem_profile = async (req, res) => {
         const mem_token = req.cookies.jwtoken;
         const verified_mem = jwt.verify(mem_token, "mem123");
         const email = verified_mem.email;
-        const user = await User.find({ email: email });
+        const user = await User.findOne({ email: email });
         // const program = await Program.findById(student[0].ProgramRegistered).populate('DegreeOffered BranchOffered CourseOffered');
 
         // const program = await Program.findById(student.ProgramRegistered).populate('DegreeOffered BranchOffered CourseOffered');
@@ -319,7 +306,7 @@ exports.g_changepwdadmin = async (req, res) => {
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "ad123");
         const email = verify_one.email;
-        const user = await User.find({ email: email })
+        const user = await User.findOne({ email: email })
         res.render("Admin/changepwdadmin", { user });
     } catch (err) {
         res.status(500).send("Internal Server Error");
@@ -347,6 +334,7 @@ exports.p_changepwdadmin = async (req, res) => {
             // const href = "/changepwdadmin";
             // res.render("Admin/alert.ejs", { title, message, icon, href });
 
+            res.redirect("changepwdadmin");
             return;
         }
         const user = await User.findOne({ email: email });
@@ -363,6 +351,7 @@ exports.p_changepwdadmin = async (req, res) => {
             // const href = "/changepwdadmin";
             // res.render("Admin/alert.ejs", { title, message, icon, href });
 
+            res.redirect("changepwdadmin");
             return;
         }
 
@@ -375,7 +364,7 @@ exports.p_changepwdadmin = async (req, res) => {
         // const message = "Password changed successfully!";
         // const icon = "success";
         // const href = "/adminhome";
-        res.render("Admin/admin_sidenav", {user});
+        res.redirect("admin-profile");
 
     } catch (err) {
         console.error(err);
@@ -388,7 +377,7 @@ exports.g_changepwdmem = async (req, res) => {
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "mem123");
         const email = verify_one.email;
-        const user = await User.find({ email: email })
+        const user = await User.findOne({ email: email })
         res.render("Member/changepwdmem", { user });
     } catch (err) {
         res.status(500).send("Internal Server Error");
@@ -415,7 +404,7 @@ exports.p_changepwdmem = async (req, res) => {
             // const icon = "error";
             // const href = "/changepwdadmin";
             // res.render("Admin/alert.ejs", { title, message, icon, href });
-
+            res.redirect("changepwdmem");
             return;
         }
         const user = await User.findOne({ email: email });
@@ -431,7 +420,7 @@ exports.p_changepwdmem = async (req, res) => {
             // const icon = "error";
             // const href = "/changepwdadmin";
             // res.render("Admin/alert.ejs", { title, message, icon, href });
-
+            res.redirect("changepwdmem");
             return;
         }
 
@@ -444,7 +433,7 @@ exports.p_changepwdmem = async (req, res) => {
         // const message = "Password changed successfully!";
         // const icon = "success";
         // const href = "/adminhome";
-        res.render("Member/member_sidenav", {user});
+        res.redirect("mem-profile");
 
     } catch (err) {
         console.error(err);
@@ -452,132 +441,312 @@ exports.p_changepwdmem = async (req, res) => {
     }
 }
 
-// exports.g_forgetpwdadmin = async (req, res) => {
-//     try {
-//         const stored_token = req.cookies.jwtoken;
-//         const verify_one = jwt.verify(stored_token, "ad123");
-//         const email = verify_one.email;
-//         const user = await User.find({ email: email })
-//         const otp =otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false });
-//         req.session.otp = otp;
-//         req.session.save(); 
+exports.g_forgetpwdadmin = async (req, res) => {
+    try {
+        // const stored_token = req.cookies.jwtoken;
+        // const verify_one = jwt.verify(stored_token, "mem123");
+        // const email = verify_one.email;
+        // const user = await User.find({ email: email })
+        res.render("Admin/forgetpwdadmin");
+    } catch (err) {
+        res.status(500).send("Internal Server Error");
+    }
+}
+exports.p_forgetpwdadmin = async (req, res) => {
+    try {
+       
+        const email = req.body.email;
+        const user = await User.findOne({ email: email })
+        console.log(user);
+        if(!user)
+             res.send("no match email");
+        
+        const otp =otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false });
 
-//             // const hashedpwd = await bcrypt.hash(randomPass, saltRounds);
-//             // await Admin.findOneAndUpdate({ 'Email_id': req.body.a_email }, { 'Password': hashedpwd }, { new: true })
+        const secret = "ad123";
+        const token = jwt.sign({ otp: otp, email: user.email }, secret);
 
-//             let transporter = nodemailer.createTransport({
-//                 service: "gmail",
-//                 host: "smtp.daiict.ac.in",
-//                 port: 587,
-//                 auth: {
-//                     user: '202101232@daiict.ac.in',
-//                     pass: 'pmqnqyndofccxhkk'
-//                 },
-//                 tls: {
-//                     rejectUnauthorized: false
-//                 }
-//             });
+        console.log("tokenn");
+        console.log(token);
 
-//             const mailOptions = {
-//                 from: '202101232@daiict.ac.in', // Sender's email address
-//                 to: 'vixitabhalodiya@gmail.com',//'202101234@daiict.ac.in', // Recipient's email address
-//                 subject: "OTP", // Subject of the email
-//                 text: 'This is a test email sent from Node.js using Nodemailer.',
-//                 html: `
-//             <h2> Here your OTP. </h2>
+        res.cookie("jwtoken", token, {
+            expires: new Date(Date.now() + 25892000000),
+            httpOnly: true
+        });
+       
+        console.log("generatedd");
+        req.session.otp = otp;
+        req.session.save(); 
+
+            // const hashedpwd = await bcrypt.hash(randomPass, saltRounds);
+            // await Admin.findOneAndUpdate({ 'Email_id': req.body.a_email }, { 'Password': hashedpwd }, { new: true })
+
+            let transporter = nodemailer.createTransport({
+                service: "gmail",
+                host: "smtp.daiict.ac.in",
+                port: 587,
+                auth: {
+                    user: '202101232@daiict.ac.in',
+                    pass: 'pmqnqyndofccxhkk'
+                },
+                tls: {
+                    rejectUnauthorized: false
+                }
+            });
+           console.log(email);
+            const mailOptions = {
+                from: '202101232@daiict.ac.in', // Sender's email address
+                to: email,//'202101234@daiict.ac.in', // Recipient's email address
+                subject: "OTP", // Subject of the email
+                text: 'This is a test email sent from Node.js using Nodemailer.',
+                html: `
+            <h2> Here your OTP. </h2>
           
-//             <p> <b> OTP : </b> ${otp} </p> 
+            <p> <b> OTP : </b> ${otp} </p> 
                
-//             `,
-//             };
+            `,
+            };
 
-//             console.log("mail continue again");
+            console.log("mail continue again");
 
-//             transporter.sendMail(mailOptions, (error, info) => {
-//                 if (error) {
-//                     console.error('Error:', error);
-//                 } else {
-//                     console.log('Email sent:', info.response);
-//                 }
-//                 // const title = "SUCCESS";
-//                 // const message = "Check your mail to access your new password";
-//                 // const icon = "success";
-//                 // const href = "/adminLogin";
-//                 res.render("Admin/passotpadmin", {otp });
-//             })
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.error('Error:', error);
+                } else {
+                    console.log('Email sent:', info.response);
+                }
+                // const title = "SUCCESS";
+                // const message = "Check your mail to access your new password";
+                // const icon = "success";
+                // const href = "/adminLogin";
+                res.render("Admin/passotpadmin", {otp });
+            })
         
-//     } catch (err) {
-//         res.status(500).send("Internal Server Error");
-//     }
-// }
-// exports.p_varifyotpadmin = async (req, res) => {
-//     try {
-//         console.log("varifyyyyyyy");
-//         const enteredOtp = req.body.otp;
-//         console.log(enteredOtp);
+    } catch (err) {
+        res.status(500).send("Internal Server Error");
+    }
+}
+exports.p_varifyotpadmin = async (req, res) => {
+    try {
+        console.log("varifyyyyyyy");
+        const enteredOtp = req.body.otp;
+        console.log(enteredOtp);
 
-//         if (!req.session.otp) {
-//             return res.status(400).send('OTP not found in session');
-//         }
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "ad123");
+        const Email = verify_one.email;
+        const user = await User.find({ email: Email })
 
-//         if (enteredOtp === req.session.otp) {
-//             // OTP is correct, proceed with password reset or other actions
-//             req.session.otp = null; // Clear OTP from session after verification
-//             // res.send('OTP verified successfully');
-//         } else {
-//             // res.status(400).send('Invalid OTP');
-//             console.log("doneeee");
-//         }
-//         res.render("Admin/newpwdadmin");
+        if (!req.session.otp) {
+            return res.status(400).send('OTP not found in session');
+        }
 
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send("An error occured while changing password!");
-//     }
-// }
+        if (enteredOtp === req.session.otp) {
+            // OTP is correct, proceed with password reset or other actions
+            req.session.otp = null; // Clear OTP from session after verification
+            // res.send('OTP verified successfully');
+        } else {
+            // res.status(400).send('Invalid OTP');
+            console.log("doneeee");
+        }
+        res.render("Admin/newpwdadmin");
 
-// exports.p_newpassadmin = async (req, res) => {
-//     try {
-//         console.log("helololoo");
-//         const stored_token = req.cookies.jwtoken;
-//         console.log(stored_token);
-//         const verify_one = jwt.verify(stored_token, "ad123");
-//         console.log(verify_one);
-//         const email = verify_one.email;
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occured while changing password!");
+    }
+}
 
-//         const newpawd = req.body.newpass;
-//         console.log(req.body);
+exports.p_newpassadmin = async (req, res) => {
+    try {
+        console.log("helololoo");
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "ad123");
+        const Email = verify_one.email;
+        const user = await User.findOne({ email: Email })
+      console.log(user);
+        const newpwd = req.body.newpass;
+        console.log(req.body);
 
         
-//         const user = await User.findOne({ email: email });
+       
+        
+        const hashedpwd = await bcrypt.hash(newpwd, saltRounds);
+        user.password = hashedpwd;
+        await user.save();
+        console.log(user);
+        console.log("sucessfully changed");
+
+        // const title = "SUCCESS";
+        // const message = "Password changed successfully!";
+        // const icon = "success";
+        // const href = "/adminhome";
+        res.render("Admin/adminlogin", {user});
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occured while changing password!");
+    }
+}
+
+
+exports.g_forgetpwdmember = async (req, res) => {
+    try {
+        // const stored_token = req.cookies.jwtoken;
+        // const verify_one = jwt.verify(stored_token, "mem123");
+        // const email = verify_one.email;
+        // const user = await User.find({ email: email })
+        res.render("Member/forgetpwdmember");
+    } catch (err) {
+        res.status(500).send("Internal Server Error");
+    }
+}
+exports.p_forgetpwdmember = async (req, res) => {
+    try {
+       
+        const email = req.body.email;
+        const user = await User.findOne({ email: email })
+        console.log(user);
+        if(!user)
+             res.send("no match email");
+        
+        const otp =otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false });
+
+        const secret = "mem123";
+        const token = jwt.sign({ otp: otp, email: user.email }, secret);
+
+        console.log("tokenn");
+        console.log(token);
+
+        res.cookie("jwtoken", token, {
+            expires: new Date(Date.now() + 25892000000),
+            httpOnly: true
+        });
+       
+        console.log("generatedd");
+        req.session.otp = otp;
+        req.session.save(); 
+
+            // const hashedpwd = await bcrypt.hash(randomPass, saltRounds);
+            // await Admin.findOneAndUpdate({ 'Email_id': req.body.a_email }, { 'Password': hashedpwd }, { new: true })
+
+            let transporter = nodemailer.createTransport({
+                service: "gmail",
+                host: "smtp.daiict.ac.in",
+                port: 587,
+                auth: {
+                    user: '202101232@daiict.ac.in',
+                    pass: 'pmqnqyndofccxhkk'
+                },
+                tls: {
+                    rejectUnauthorized: false
+                }
+            });
+           console.log(email);
+            const mailOptions = {
+                from: '202101232@daiict.ac.in', // Sender's email address
+                to: email,//'202101234@daiict.ac.in', // Recipient's email address
+                subject: "OTP", // Subject of the email
+                text: 'This is a test email sent from Node.js using Nodemailer.',
+                html: `
+            <h2> Here your OTP. </h2>
+          
+            <p> <b> OTP : </b> ${otp} </p> 
+               
+            `,
+            };
+
+            console.log("mail continue again");
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.error('Error:', error);
+                } else {
+                    console.log('Email sent:', info.response);
+                }
+                // const title = "SUCCESS";
+                // const message = "Check your mail to access your new password";
+                // const icon = "success";
+                // const href = "/adminLogin";
+                res.render("Member/passotpmember", {otp });
+            })
+        
+    } catch (err) {
+        res.status(500).send("Internal Server Error");
+    }
+}
+exports.p_varifyotpmember = async (req, res) => {
+    try {
+        console.log("varifyyyyyyy");
+        const enteredOtp = req.body.otp;
+        console.log(enteredOtp);
+
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "mem123");
+        const Email = verify_one.email;
+        const user = await User.find({ email: Email })
+
+        if (!req.session.otp) {
+            return res.status(400).send('OTP not found in session');
+        }
+
+        if (enteredOtp === req.session.otp) {
+            // OTP is correct, proceed with password reset or other actions
+            req.session.otp = null; // Clear OTP from session after verification
+            // res.send('OTP verified successfully');
+        } else {
+            // res.status(400).send('Invalid OTP');
+            console.log("doneeee");
+        }
+        res.render("Member/newpwdmember");
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occured while changing password!");
+    }
+}
+
+exports.p_newpassmember= async (req, res) => {
+    try {
+        console.log("helololoo");
+        const stored_token = req.cookies.jwtoken;
+        const verify_one = jwt.verify(stored_token, "mem123");
+        const Email = verify_one.email;
+        const user = await User.findOne({ email: Email })
+      console.log(user);
+        const newpwd = req.body.newpass;
+        console.log(req.body);
 
         
-//         const hashedpwd = await bcrypt.hash(newpwd, saltRounds);
-//         user.password = hashedpwd;
-//         await user.save();
-//         console.log("sucessfully changed");
+       
+        
+        const hashedpwd = await bcrypt.hash(newpwd, saltRounds);
+        user.password = hashedpwd;
+        await user.save();
+        console.log(user);
+        console.log("sucessfully changed");
 
-//         // const title = "SUCCESS";
-//         // const message = "Password changed successfully!";
-//         // const icon = "success";
-//         // const href = "/adminhome";
-//         res.render("Admin/admin_sidenav", {user});
+        // const title = "SUCCESS";
+        // const message = "Password changed successfully!";
+        // const icon = "success";
+        // const href = "/adminhome";
+        res.render("Member/memberlogin", {user});
 
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send("An error occured while changing password!");
-//     }
-// }
-
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occured while changing password!");
+    }
+}
 
 exports.g_viewtask = async (req, res) => {      // done
     try { 
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "ad123");
         const Email = verify_one.email;
-        const user = await User.find({ email: Email })
+        const user = await User.findOne({ email: Email })
 
         const assignments = await Assignment.find({ assignedBy: user }).populate('assignedTo', 'name email');
+        console.log(assignments);
        
         res.render("Admin/viewtask", {user, assignments});
 
@@ -593,7 +762,7 @@ exports.g_assigntask = async (req, res) => {    //done
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "ad123");
         const Email = verify_one.email;
-        const user = await User.find({ email: Email })
+        const user = await User.findOne({ email: Email })
        
         res.render("Admin/assigntask", {user});
 
@@ -646,7 +815,7 @@ exports.g_pendingtask = async (req, res) => {     // done
         const user = await User.findOne({ email: Email })
         
         console.log(user);
-        const assignments = await Assignment.find({ assignedBy: user, status: 'incomplete' }).populate('assignedTo', 'name email');
+        const assignments = await Assignment.find({ assignedBy: user, status: { $in: ['incomplete', 'pending_review'] } }).populate('assignedTo', 'name email');
         console.log(assignments);
         console.log("heyyyyyyy");
         res.render("Admin/pendingtask" ,{user, assignments});
@@ -685,7 +854,7 @@ exports.g_viewtask_mem = async (req, res) => {         //done
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "mem123");
         const Email = verify_one.email;
-        const user = await User.find({ email: Email })
+        const user = await User.findOne({ email: Email })
 
         const assignments = await Assignment.find({ assignedTo: user }).populate('assignedBy', 'name email');
        
@@ -765,7 +934,7 @@ exports.p_varifytask = async (req, res) => {
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "ad123");
         const Email = verify_one.email;
-        const user = await User.find({ email: Email })
+        const user = await User.findOne({ email: Email })
         console.log("hooo");
         console.log(req.body);
        
@@ -793,7 +962,7 @@ exports.p_pendingtask_mem = async (req, res) => {      //done  second time click
         const stored_token = req.cookies.jwtoken;
         const verify_one = jwt.verify(stored_token, "mem123");
         const Email = verify_one.email;
-        const user = await User.find({ email: Email })
+        const user = await User.findOne({ email: Email })
         console.log("hooo");
         console.log(req.body);
        
@@ -941,7 +1110,7 @@ exports.logoutadmin = async (req, res, next) => {
         // const icon = "success";
         // const href = "/";
         // res.render("Admin/alert.ejs", { title, message, icon, href });
-        res.render("Admin/adminlogin");
+        res.render("user");
 
     } catch (err) {
         // This block will only execute if isLoggedInstudent returns false
@@ -976,7 +1145,7 @@ exports.logoutmember = async (req, res, next) => {
         // const icon = "success";
         // const href = "/";
         // res.render("Admin/alert.ejs", { title, message, icon, href });
-        res.render("Member/memberlogin");
+        res.render("user");
 
     } catch (err) {
         // This block will only execute if isLoggedInstudent returns false

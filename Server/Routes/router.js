@@ -44,9 +44,15 @@ route.post('/changepwdadmin', controller.p_changepwdadmin);
 route.get('/changepwdmem', controller.g_changepwdmem);
 route.post('/changepwdmem', controller.p_changepwdmem);
 
-// route.get('/forgetpwdadmin', controller.g_forgetpwdadmin);
-// route.post('/varifyotpadmin', controller.p_varifyotpadmin);
-// route.post('/newpassadmin', controller.p_newpassadmin);
+route.get('/forgetpwdadmin', controller.g_forgetpwdadmin);
+route.post('/forgetpwdadmin', controller.p_forgetpwdadmin);
+route.post('/varifyotpadmin', controller.p_varifyotpadmin);
+route.post('/newpassadmin', controller.p_newpassadmin);
+
+route.get('/forgetpwdmember', controller.g_forgetpwdmember);
+route.post('/forgetpwdmember', controller.p_forgetpwdmember);
+route.post('/varifyotpmember', controller.p_varifyotpmember);
+route.post('/newpassmember', controller.p_newpassmember);
 
 route.get('/viewtask', controller.g_viewtask);     //done
 
