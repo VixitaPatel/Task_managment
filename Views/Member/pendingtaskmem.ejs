@@ -23,8 +23,8 @@
 					<div class="img_holder">
 						<img src="img/member.png" alt="profile_pic">
 					</div>
-					<p class="title"><%= user.name%></p>
-					<p class="sub_title"><%= user.email%>e</p>
+					<p class="title"><%= user.name %></p>
+					<p class="sub_title"><%= user.email %></p>
 				</div>
 				<ul class="menu">
 					<li><a href="/mem-profile">
@@ -35,9 +35,9 @@
 						<span class="icon"><i class="fas fa-file-alt"></i></span>
 						<span class="text">Assigned tasks</span>
 					</a></li>
-					<li><a href="/pendingtaskmem">
+					<li><a href="/pendingtaskmem" id="profile-link">
 						<span class="icon"><i class="fas fa-chart-pie"></i></span>
-						<span class="text">Pending Tasks</span>
+						<span class="text" id="plink">Pending Tasks</span>
 					</a></li>
 					<li><a href="/completedtaskmem">
 						<span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
@@ -78,10 +78,9 @@
 						<div class="description"><%= assignment.description %></div>
 						
 						<div class="buttonContainer">
-							<form action="/pendingtaskmem" method="POST">
-								<button type="submit"  name="varify"  value="<%= assignment._id %>" class="button" >Done</button>
+							<form action="/pendingtaskmem" method="POST" class="mark-completed-form">
+								<button type="submit" name="varify" value="<%= assignment._id %>" class="button">Mark as Completed</button>
 							</form>
-							
 						</div>
 					</div>
 				<% }); %>
@@ -89,69 +88,6 @@
 		</div>
 		</div>
 	</div>
-
-<!-- <script>
-	var hamburger = document.querySelector(".hamburger");
-	var wrapper  = document.querySelector(".wrapper");
-	var backdrop = document.querySelector(".backdrop");
-    
-	hamburger.addEventListener("click", function(){
-		wrapper.classList.add("active");
-	})
-
-	backdrop.addEventListener("click", function(){
-		wrapper.classList.remove("active");
-	})
-    document.getElementById('profile-link').style.backgroundColor = "white";
-    document.getElementById('plink').style.color = "#425c5a";
-    const container = document.getElementById('card-container');
-    const names = [
-            'John Doe', 'Jane Smith', 'Alice Johnson', 'Bob Brown', 'Charlie Davis',
-            'Diana Evans', 'Ethan Harris', 'Fiona Green', 'George White', 'Helen Black'
-        ];
-        const descriptions = [
-            'Lorem ipsum dolor sit amet, consectetur ',
-            'Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.',
-            'In condimentum facilisis porta.',
-            'Sed nec diam eu diam mattis viverra.Lorem, ipsum dolor situisquam, ut.',
-            'Nulla fringilla, orci ac euismod semper.',
-            'Aenean ultricies mi vitae est.Lorem ipsum dolor sit amet consectetur ommodi facilis beatae eos dolorem consectetur blanditiis, porro earum vitae reiciendis aliquam recusandae qui alias ab minima. Nostrum, molestiae.',
-            'Mauris placerat eleifend leo.',
-            'Quisque sit amet est et sapien ullamcorper pharetra.',
-            'Vestibulum erat wisi, condimentum sed, commodo vitae.',
-            'Mauris fermentum dictum magna.'
-        ];
-
-        for (let i = 0; i < 10; i++) 
-        { 
-            const card = document.createElement('div');
-            card.className = 'cardtemplate';
-            const nameDiv = document.createElement('div');
-            nameDiv.className = 'name';
-            nameDiv.textContent = names[i];
-
-            const descriptionDiv = document.createElement('div');
-            descriptionDiv.className = 'description';
-            descriptionDiv.textContent = descriptions[i];
-
-			const buttonDiv = document.createElement('a');
-            buttonDiv.className = 'button';
-            buttonDiv.textContent = 'Mark as Completed';
-            buttonDiv.href = '#'; 
-			buttonDiv.addEventListener('click', function(event) {
-				event.preventDefault();
-				buttonDiv.textContent = 'Pending to be Verified';
-				buttonDiv.style.pointerEvents = 'none'; // Disable further clicks
-    		});
-            
-            card.appendChild(nameDiv);
-            card.appendChild(descriptionDiv);
-			card.appendChild(buttonDiv);
-            container.appendChild(card);
-        }
-		document.getElementById("profile-link").style.backgroundColor = "white";
-    	document.getElementById("plink").style.color = "#425c5a";
-</script> -->
 
 <script>
 	var hamburger = document.querySelector(".hamburger");

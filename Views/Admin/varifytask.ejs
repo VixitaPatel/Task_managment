@@ -82,10 +82,10 @@
 						<div class="description"><%= assignment.description %></div>
 						
 						<div class="buttonContainer">
-							<form action="/varifytask" method="POST">
+							<form action="/varifytask" method="POST" class="buttonform">
 								<button type="submit" name="done"   value="<%= assignment._id %>" class="button" >Done</button>
 							</form>
-							<form action="/varifytask" method="POST">
+							<form action="/varifytask" method="POST" class="buttonform">
 								<button type="submit" name="undone"  value="<%= assignment._id %>" class="button">Undone</button>
 							</form>
 						</div>

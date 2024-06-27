@@ -48,7 +48,7 @@ body {
 }
 
 .vertical_bar .profile_info img {
-	width: 75px;
+	width: 100px;
 }
 
 .vertical_bar .profile_info .title {
@@ -231,23 +231,22 @@ body {
 }
 
 .name {
-    font-size: 18px;
+    font-size: 1.3rem;
     font-weight: bold;
     margin-bottom: 8px;
     color: #333;
 }
 .description {
-    font-size: 14px;
+    font-size: 1.1rem;
     color: #666;
     margin-bottom: 16px;
 }
 .button {
-    margin-top: auto; /* Push button to the bottom */
+    margin-top: auto; 
     padding: 8px 16px;
     background-color: #425c5a;
     color: #fff;
-    text-align: center;
-    text-decoration: none;
+    width: 100%;
     border-radius: 4px;
     cursor: pointer;
 }
@@ -260,4 +259,13 @@ body {
     justify-content: center; 
     margin-bottom: 20px;
     text-align: center;
+}
+
+.assigned_to
+{
+	font-size: 1.2rem;
+	margin-bottom: 2px;
+}
+.buttonContainer{
+	margin-top: auto;
 }
