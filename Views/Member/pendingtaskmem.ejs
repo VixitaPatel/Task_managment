@@ -76,10 +76,14 @@
 						<div class="name"><%= assignment.title %></div>
 						<div class="assigned_to">Assigned by: <%= assignment.assignedBy.name %></div>
 						<div class="description"><%= assignment.description %></div>
-						
+					
 						<div class="buttonContainer">
 							<form action="/pendingtaskmem" method="POST" class="mark-completed-form">
-								<button type="submit" name="varify" value="<%= assignment._id %>" class="button">Mark as Completed</button>
+								<% if (assignment.status === "pending_review") { %>
+									<button type="button" class="button" disabled>Pending to be reviewed</button>
+								<% } else { %>
+									<button type="submit" name="varify" value="<%= assignment._id %>" class="button">Mark as Completed</button>
+								<% } %>
 							</form>
 						</div>
 					</div>

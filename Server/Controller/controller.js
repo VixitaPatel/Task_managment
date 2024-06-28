@@ -325,52 +325,35 @@ exports.p_changepwdadmin = async (req, res) => {
         const { oldpwd, newpwd, confirmpwd } = req.body;
         console.log(req.body);
 
-        if (newpwd != confirmpwd)                   //new password  check strong
-        {
+        if (newpwd != confirmpwd) {
             console.log("password not match");
-            // const title = "ERROR";
-            // const message = "New password and confirm password do not match!";
-            // const icon = "error";
-            // const href = "/changepwdadmin";
-            // res.render("Admin/alert.ejs", { title, message, icon, href });
-
-            res.redirect("changepwdadmin");
+            res.redirect("/changepwdadmin?error=Password+do+not+match");
             return;
         }
+
         const user = await User.findOne({ email: email });
 
         const pwdinvalid = await bcrypt.compare(oldpwd, user.password);
-        // const pwdinvalid = oldpwd === user.Password;
         console.log(oldpwd);
         console.log(user.password);
         if (!pwdinvalid) {
             console.log("password not correct");
-            // const title = "ERROR";
-            // const message = "Old Passward is incorrect!";
-            // const icon = "error";
-            // const href = "/changepwdadmin";
-            // res.render("Admin/alert.ejs", { title, message, icon, href });
-
-            res.redirect("changepwdadmin");
+            res.redirect("/changepwdadmin?error=Old+password+is+incorrect");
             return;
         }
 
         const hashedpwd = await bcrypt.hash(newpwd, saltRounds);
         user.password = hashedpwd;
         await user.save();
-        console.log("sucessfully changed");
+        console.log("successfully changed");
 
-        // const title = "SUCCESS";
-        // const message = "Password changed successfully!";
-        // const icon = "success";
-        // const href = "/adminhome";
-        res.redirect("admin-profile");
-
+        res.redirect("/changepwdadmin?success=Password+changed+successfully");
     } catch (err) {
         console.error(err);
-        res.status(500).send("An error occured while changing password!");
+        res.status(500).send("An error occurred while changing password!");
     }
 }
+
 
 exports.g_changepwdmem = async (req, res) => {
     try {
@@ -399,12 +382,7 @@ exports.p_changepwdmem = async (req, res) => {
         if (newpwd != confirmpwd)                   //new password  check strong
         {
             console.log("password not match");
-            // const title = "ERROR";
-            // const message = "New password and confirm password do not match!";
-            // const icon = "error";
-            // const href = "/changepwdadmin";
-            // res.render("Admin/alert.ejs", { title, message, icon, href });
-            res.redirect("changepwdmem");
+            res.redirect("/changepwdmem?error=Password+do+not+match");
             return;
         }
         const user = await User.findOne({ email: email });
@@ -415,12 +393,7 @@ exports.p_changepwdmem = async (req, res) => {
         console.log(user.password);
         if (!pwdinvalid) {
             console.log("password not correct");
-            // const title = "ERROR";
-            // const message = "Old Passward is incorrect!";
-            // const icon = "error";
-            // const href = "/changepwdadmin";
-            // res.render("Admin/alert.ejs", { title, message, icon, href });
-            res.redirect("changepwdmem");
+            res.redirect("/changepwdmem?error=Old+password+is+incorrect");
             return;
         }
 
@@ -429,11 +402,7 @@ exports.p_changepwdmem = async (req, res) => {
         await user.save();
         console.log("sucessfully changed");
 
-        // const title = "SUCCESS";
-        // const message = "Password changed successfully!";
-        // const icon = "success";
-        // const href = "/adminhome";
-        res.redirect("mem-profile");
+        res.redirect("/changepwdmem?success=Password+changed+successfully");
 
     } catch (err) {
         console.error(err);
@@ -1040,7 +1009,7 @@ exports.g_updatemember = async (req, res) => {
         const Email = verify_one.email;
         const user = await User.findOne({ email: Email })
         console.log("2");
-        res.render("Member/updatemember.ejs", { user });
+        res.render("Member/updatemember.ejs", { user }); 
 
     } catch (err) {
         console.error(err);
@@ -1082,6 +1051,7 @@ exports.p_updatemember = async (req, res) => {
         res.status(500).send("An error occured while updating faculty data");
     }
 }
+
 
 async function isLoggedInadmin(req, res, next) {
     try {

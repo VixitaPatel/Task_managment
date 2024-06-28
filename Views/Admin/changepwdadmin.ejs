@@ -96,7 +96,7 @@
 							<hr>
 							<div class="form-group">
 								<div class="label-container">
-									<span class="label">Enter confirn Password:</span>
+									<span class="label">Confirm new Password:</span>
 								</div>
 								<input type="password" class="inputtext" name="confirmpwd" required>
 							</div>
@@ -123,6 +123,17 @@
 	backdrop.addEventListener("click", function(){
 		wrapper.classList.remove("active");
 	})
+	const urlParams = new URLSearchParams(window.location.search);
+        const successMessage = urlParams.get('success');
+        const errorMessage = urlParams.get('error');
+        
+		if (successMessage) {
+            alert(successMessage);
+            window.location.href = "/admin-profile"; // Redirect after clicking the alert
+        } else if (errorMessage) {
+            alert(errorMessage);
+            window.location.href = "/changepwdadmin"; // Redirect after clicking the alert
+        }
     document.getElementById('profile-link').style.backgroundColor = "white";
     document.getElementById('plink').style.color = "#425c5a";
 </script>
